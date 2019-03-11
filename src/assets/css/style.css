@@ -1,0 +1,55 @@
+html * {
+    font-family: 'Microsoft yahei', sans-serif;
+}
+
+.main {
+    margin: 30px auto;
+    float: none !important;
+}
+
+.breadcrumb {
+    margin-bottom: 25px;
+}
+
+.pagination {
+    margin-top: 25px;
+}
+
+.dialog-main {
+    overflow: hidden;
+}
+
+.work-station {
+    float: left;
+    width: 185px;
+    min-height: 500px;
+    margin-right: 15px;
+}
+
+ul li label,
+ul li span {
+    display: inline-block;
+    font-size: 14px;
+    width: 70px;
+    line-height: 30px;
+    vertical-align: middle;
+}
+
+ul li span {
+    display: inline-block;
+    font-size: 14px;
+    width: 65px;
+    line-height: 30px;
+    vertical-align: middle;
+}
+
+.station-list li {
+    border: 1px solid #dcdfe6;
+    margin-bottom: 5px;
+}
+
+.dialog-text {
+    text-align: center ;
+    margin-top: 20px;
+    margin-bottom: 45px;
+}

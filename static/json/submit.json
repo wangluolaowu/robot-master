@@ -1,0 +1,439 @@
+{
+    "data": {
+        "id": "idididiidiid",
+        "result": [{
+                "result": [{
+                        "dealerCou": 1,
+                        "lineCou": 1,
+                        "orderWaveId": 1,
+                        "priorityNum": 1,
+                        "route": "AAAA",
+                        "wsId": 1
+                    },
+                    {
+                        "dealerCou": 11,
+                        "lineCou": 11,
+                        "orderWaveId": 1,
+                        "priorityNum": 11,
+                        "route": "BBB",
+                        "wsId": 11
+                    }, {
+                        "dealerCou": 21,
+                        "lineCou": 21,
+                        "orderWaveId": 1,
+                        "priorityNum": 21,
+                        "route": "CCC",
+                        "wsId": 21
+                    },
+                    {
+                        "dealerCou": 31,
+                        "lineCou": 31,
+                        "orderWaveId": 1,
+                        "priorityNum": 31,
+                        "route": "DDD",
+                        "wsId": 31
+                    }, {
+                        "dealerCou": 41,
+                        "lineCou": 41,
+                        "orderWaveId": 1,
+                        "priorityNum": 41,
+                        "route": "EEE",
+                        "wsId": 41
+                    },
+                    {
+                        "dealerCou": 51,
+                        "lineCou": 51,
+                        "orderWaveId": 1,
+                        "priorityNum": 51,
+                        "route": "FFF",
+                        "wsId": 51
+                    }
+                ],
+                "wsWorkStationInfo": {
+                    "curtWorkLocGroup": "A",
+                    "curtWorkstationId": 2101,
+                    "deliveryPickedConfirm": 1,
+                    "entityWorkstationId": 1,
+                    "extWorkstationType": "V",
+                    "holderWorkDirection": 2,
+                    "holderWorkPosX": 8,
+                    "holderWorkPosY": 19,
+                    "ipAddress": "172.16.15.148",
+                    "seedWallNum": 1,
+                    "userNum": "Admin",
+                    "wallCount": 0,
+                    "workstationStatus": 10,
+                    "workstationType": 2
+                }
+            },
+            {
+                "result": [{
+                        "dealerCou": 22,
+                        "lineCou": 22,
+                        "orderWaveId": 2,
+                        "priorityNum": 22,
+                        "route": "22",
+                        "wsId": 22
+                    },
+                    {
+                        "dealerCou": 52,
+                        "lineCou": 62,
+                        "orderWaveId": 2,
+                        "priorityNum": 72,
+                        "route": "42",
+                        "wsId": 32
+                    },
+                    {
+                        "dealerCou": 2,
+                        "lineCou": 2,
+                        "orderWaveId": 2,
+                        "priorityNum": 2,
+                        "route": "2",
+                        "wsId": 2
+                    },
+                    {
+                        "dealerCou": 22,
+                        "lineCou": 22,
+                        "orderWaveId": 2,
+                        "priorityNum": 22,
+                        "route": "22",
+                        "wsId": 22
+                    },
+                    {
+                        "dealerCou": 52,
+                        "lineCou": 62,
+                        "orderWaveId": 2,
+                        "priorityNum": 72,
+                        "route": "42",
+                        "wsId": 32
+                    },
+                    {
+                        "dealerCou": 2,
+                        "lineCou": 2,
+                        "orderWaveId": 2,
+                        "priorityNum": 2,
+                        "route": "2",
+                        "wsId": 2
+                    },
+                    {
+                        "dealerCou": 22,
+                        "lineCou": 22,
+                        "orderWaveId": 2,
+                        "priorityNum": 22,
+                        "route": "22",
+                        "wsId": 22
+                    }, {
+                        "dealerCou": 52,
+                        "lineCou": 62,
+                        "orderWaveId": 2,
+                        "priorityNum": 72,
+                        "route": "42",
+                        "wsId": 32
+                    },
+                    {
+                        "dealerCou": 62,
+                        "lineCou": 72,
+                        "orderWaveId": 2,
+                        "priorityNum": 82,
+                        "route": "52",
+                        "wsId": 42
+                    }, {
+                        "dealerCou": 72,
+                        "lineCou": 82,
+                        "orderWaveId": 2,
+                        "priorityNum": 92,
+                        "route": "62",
+                        "wsId": 51
+                    },
+                    {
+                        "dealerCou": 82,
+                        "lineCou": 92,
+                        "orderWaveId": 2,
+                        "priorityNum": 102,
+                        "route": "72",
+                        "wsId": 62
+                    }, {
+                        "dealerCou": 22,
+                        "lineCou": 22,
+                        "orderWaveId": 2,
+                        "priorityNum": 22,
+                        "route": "22",
+                        "wsId": 22
+                    }, {
+                        "dealerCou": 22,
+                        "lineCou": 22,
+                        "orderWaveId": 2,
+                        "priorityNum": 22,
+                        "route": "22",
+                        "wsId": 22
+                    }
+                ],
+                "wsWorkStationInfo": {
+                    "curtWorkLocGroup": "A",
+                    "curtWorkstationId": 2101,
+                    "deliveryPickedConfirm": 1,
+                    "entityWorkstationId": 1,
+                    "extWorkstationType": "V",
+                    "holderWorkDirection": 2,
+                    "holderWorkPosX": 8,
+                    "holderWorkPosY": 19,
+                    "ipAddress": "172.16.15.148",
+                    "seedWallNum": 1,
+                    "userNum": "Admin",
+                    "wallCount": 0,
+                    "workstationStatus": 10,
+                    "workstationType": 2
+                }
+            }, {
+                "result": [{
+                    "dealerCou": 2,
+                    "lineCou": 2,
+                    "orderWaveId": 3,
+                    "priorityNum": 2,
+                    "route": "111",
+                    "wsId": 2
+                }, {
+                    "dealerCou": 52,
+                    "lineCou": 62,
+                    "orderWaveId": 3,
+                    "priorityNum": 72,
+                    "route": "222",
+                    "wsId": 32
+                }, {
+                    "dealerCou": 2,
+                    "lineCou": 2,
+                    "orderWaveId": 3,
+                    "priorityNum": 2,
+                    "route": "333",
+                    "wsId": 2
+                }, {
+                    "dealerCou": 52,
+                    "lineCou": 62,
+                    "orderWaveId": 3,
+                    "priorityNum": 72,
+                    "route": "444",
+                    "wsId": 32
+                }, {
+                    "dealerCou": 62,
+                    "lineCou": 72,
+                    "orderWaveId": 3,
+                    "priorityNum": 82,
+                    "route": "555",
+                    "wsId": 42
+                }, {
+                    "dealerCou": 72,
+                    "lineCou": 82,
+                    "orderWaveId": 3,
+                    "priorityNum": 92,
+                    "route": "62",
+                    "wsId": 51
+                }, {
+                    "dealerCou": 82,
+                    "lineCou": 92,
+                    "orderWaveId": 3,
+                    "priorityNum": 102,
+                    "route": "666",
+                    "wsId": 62
+                }],
+                "wsWorkStationInfo": {
+                    "curtWorkLocGroup": "A",
+                    "curtWorkstationId": 2101,
+                    "deliveryPickedConfirm": 1,
+                    "entityWorkstationId": 1,
+                    "extWorkstationType": "V",
+                    "holderWorkDirection": 2,
+                    "holderWorkPosX": 8,
+                    "holderWorkPosY": 19,
+                    "ipAddress": "172.16.15.148",
+                    "seedWallNum": 1,
+                    "userNum": "Admin",
+                    "wallCount": 0,
+                    "workstationStatus": 10,
+                    "workstationType": 2
+                }
+            }, {
+                "result": [{
+                    "dealerCou": 2,
+                    "lineCou": 2,
+                    "orderWaveId": 4,
+                    "priorityNum": 2,
+                    "route": "2",
+                    "wsId": 2
+                }, {
+                    "dealerCou": 22,
+                    "lineCou": 22,
+                    "orderWaveId": 4,
+                    "priorityNum": 22,
+                    "route": "22",
+                    "wsId": 22
+                }, {
+                    "dealerCou": 52,
+                    "lineCou": 62,
+                    "orderWaveId": 4,
+                    "priorityNum": 72,
+                    "route": "42",
+                    "wsId": 32
+                }, {
+                    "dealerCou": 62,
+                    "lineCou": 72,
+                    "orderWaveId": 4,
+                    "priorityNum": 82,
+                    "route": "52",
+                    "wsId": 42
+                }, {
+                    "dealerCou": 72,
+                    "lineCou": 82,
+                    "orderWaveId": 4,
+                    "priorityNum": 92,
+                    "route": "62",
+                    "wsId": 51
+                }, {
+                    "dealerCou": 82,
+                    "lineCou": 92,
+                    "orderWaveId": 4,
+                    "priorityNum": 102,
+                    "route": "72",
+                    "wsId": 62
+                }],
+                "wsWorkStationInfo": {
+                    "curtWorkLocGroup": "A",
+                    "curtWorkstationId": 2101,
+                    "deliveryPickedConfirm": 1,
+                    "entityWorkstationId": 1,
+                    "extWorkstationType": "V",
+                    "holderWorkDirection": 2,
+                    "holderWorkPosX": 8,
+                    "holderWorkPosY": 19,
+                    "ipAddress": "172.16.15.148",
+                    "seedWallNum": 1,
+                    "userNum": "Admin",
+                    "wallCount": 0,
+                    "workstationStatus": 10,
+                    "workstationType": 2
+                }
+            }, {
+                "result": [{
+                    "dealerCou": 2,
+                    "lineCou": 2,
+                    "orderWaveId": 5,
+                    "priorityNum": 2,
+                    "route": "2",
+                    "wsId": 2
+                }, {
+                    "dealerCou": 22,
+                    "lineCou": 22,
+                    "orderWaveId": 5,
+                    "priorityNum": 22,
+                    "route": "22",
+                    "wsId": 22
+                }, {
+                    "dealerCou": 52,
+                    "lineCou": 62,
+                    "orderWaveId": 5,
+                    "priorityNum": 72,
+                    "route": "42",
+                    "wsId": 32
+                }, {
+                    "dealerCou": 62,
+                    "lineCou": 72,
+                    "orderWaveId": 5,
+                    "priorityNum": 82,
+                    "route": "52",
+                    "wsId": 42
+                }, {
+                    "dealerCou": 72,
+                    "lineCou": 82,
+                    "orderWaveId": 5,
+                    "priorityNum": 92,
+                    "route": "62",
+                    "wsId": 51
+                }, {
+                    "dealerCou": 82,
+                    "lineCou": 92,
+                    "orderWaveId": 5,
+                    "priorityNum": 102,
+                    "route": "72",
+                    "wsId": 62
+                }],
+                "wsWorkStationInfo": {
+                    "curtWorkLocGroup": "A",
+                    "curtWorkstationId": 2101,
+                    "deliveryPickedConfirm": 1,
+                    "entityWorkstationId": 1,
+                    "extWorkstationType": "V",
+                    "holderWorkDirection": 2,
+                    "holderWorkPosX": 8,
+                    "holderWorkPosY": 19,
+                    "ipAddress": "172.16.15.148",
+                    "seedWallNum": 1,
+                    "userNum": "Admin",
+                    "wallCount": 0,
+                    "workstationStatus": 10,
+                    "workstationType": 2
+                }
+            }, {
+                "result": [{
+                    "dealerCou": 2,
+                    "lineCou": 2,
+                    "orderWaveId": 6,
+                    "priorityNum": 2,
+                    "route": "2",
+                    "wsId": 2
+                }, {
+                    "dealerCou": 22,
+                    "lineCou": 22,
+                    "orderWaveId": 6,
+                    "priorityNum": 22,
+                    "route": "22",
+                    "wsId": 22
+                }, {
+                    "dealerCou": 52,
+                    "lineCou": 62,
+                    "orderWaveId": 6,
+                    "priorityNum": 72,
+                    "route": "42",
+                    "wsId": 32
+                }, {
+                    "dealerCou": 62,
+                    "lineCou": 72,
+                    "orderWaveId": 6,
+                    "priorityNum": 82,
+                    "route": "52",
+                    "wsId": 42
+                }, {
+                    "dealerCou": 72,
+                    "lineCou": 82,
+                    "orderWaveId": 6,
+                    "priorityNum": 92,
+                    "route": "62",
+                    "wsId": 51
+                }, {
+                    "dealerCou": 82,
+                    "lineCou": 92,
+                    "orderWaveId": 6,
+                    "priorityNum": 102,
+                    "route": "72",
+                    "wsId": 62
+                }],
+                "wsWorkStationInfo": {
+                    "curtWorkLocGroup": "A",
+                    "curtWorkstationId": 2101,
+                    "deliveryPickedConfirm": 1,
+                    "entityWorkstationId": 1,
+                    "extWorkstationType": "V",
+                    "holderWorkDirection": 2,
+                    "holderWorkPosX": 8,
+                    "holderWorkPosY": 19,
+                    "ipAddress": "172.16.15.148",
+                    "seedWallNum": 1,
+                    "userNum": "Admin",
+                    "wallCount": 0,
+                    "workstationStatus": 10,
+                    "workstationType": 2
+                }
+            }
+        ]
+    },
+    "errCode": "S",
+    "errMsg": "成功"
+}

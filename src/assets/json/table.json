@@ -1,0 +1,39 @@
+{
+    "message": "",
+    "totalPage": 0,
+    "pageSize": 10,
+    "data": [{
+        "creationDate": 1549009094000,
+        "custName": "CD重庆鹏龙1E",
+        "dealerAccount": "CN890464",
+        "locNum": "RB040531",
+        "orderHeaderId": 225671,
+        "orderLineId": 44716,
+        "orderType": "V",
+        "pickTicketNum": "148225",
+        "qty": "1",
+        "route": "E",
+        "skuName": "装饰条",
+        "skuNum": "MA117 885 09 21",
+        "wip": "47006",
+        "wipLine": "437"
+    }, {
+        "creationDate": 1549009094000,
+        "custName": "CD重庆鹏龙1E",
+        "dealerAccount": "CN890464",
+        "locNum": "RB050435",
+        "orderHeaderId": 225671,
+        "orderLineId": 44717,
+        "orderType": "V",
+        "pickTicketNum": "148225",
+        "qty": "1",
+        "route": "E",
+        "skuName": "清洗喷嘴",
+        "skuNum": "MA204 860 28 47",
+        "wip": "47006",
+        "wipLine": "346"
+    }],
+    "totalRows": 100,
+    "pageNo": 0,
+    "status": 0
+}
