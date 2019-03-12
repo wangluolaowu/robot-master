@@ -140,6 +140,29 @@ const routes = [
         name: '波次历史记录'
       }
     ]
+  },
+  {
+    path: '/',
+    component: Layout,
+    name: '盘点',
+    icon: 'el-icon-service',
+    children: [
+      {
+        path: '/reloc_out/task',
+        component: () => import('@/pages/plate/stock/StopReceiveStock'),
+        name: '停止恢复接收任务'
+      },
+      {
+        path: '/reloc_out/batch',
+        component: () => import('@/pages/plate/stock/CreateWaveStock'),
+        name: '创建波次'
+      },
+      {
+        path: '/reloc_out/history',
+        component: () => import('@/pages/plate/stock/CreatWaveMRecordStock'),
+        name: '波次历史记录'
+      }
+    ]
   }
 ]
 for (let i in routerlist) {
