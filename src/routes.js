@@ -131,12 +131,12 @@ const routes = [
       },
       {
         path: '/reloc/batch',
-        component: () => import('@/pages/plate/reloc/CreatWaveMReloc'),
+        component: () => import('@/pages/plate/reloc/CreateWaveReloc'),
         name: '创建波次'
       },
       {
         path: '/reloc/history',
-        component: () => import('@/pages/plate/reloc/StopReceiveReloc'),
+        component: () => import('@/pages/plate/reloc/CreatWaveMReloc'),
         name: '波次历史记录'
       }
     ]
