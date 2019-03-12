@@ -126,17 +126,17 @@ const routes = [
     children: [
       {
         path: '/reloc/task',
-        component: () => import('@/pages/plate/StopReceiveBinning'),
+        component: () => import('@/pages/plate/reloc/StopReceiveReloc'),
         name: '停止恢复接收任务'
       },
       {
         path: '/reloc/batch',
-        component: () => import('@/pages/plate/CreateWaveBinning'),
+        component: () => import('@/pages/plate/reloc/CreatWaveMReloc'),
         name: '创建波次'
       },
       {
         path: '/reloc/history',
-        component: () => import('@/pages/plate/CreatWaveMRecordBinning'),
+        component: () => import('@/pages/plate/reloc/StopReceiveReloc'),
         name: '波次历史记录'
       }
     ]
