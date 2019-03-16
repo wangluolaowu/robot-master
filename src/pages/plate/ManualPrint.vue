@@ -122,7 +122,7 @@
             </el-col>
         </el-form>
 
-        <el-table ref="multipleTable" :data="tableData" style="width: 100%" @selection-change="handleSelectionChange" border>
+        <el-table ref="multipleTable" :data="tableData" style="width: 100%" @selection-change="handleSelectionChange" border v-loading="tableLoading">
             <el-table-column type="selection" width="55">
             </el-table-column>
             <el-table-column prop="attribute07" label="客户编码">
@@ -162,7 +162,7 @@
                         :current-page.sync="search.currentPage" :page-size="pageSize" :page-sizes="[pageSize]" layout="total, sizes, prev, pager, next, jumper"
                         :total="totalRows">
           </el-pagination>
-           <el-dialog width="30%" title="提示" :visible.sync="isShowInnerConfirmDialog" append-to-body>
+           <el-dialog width="30%" title="提示" :visible.sync="isShowInnerConfirmDialog" append-to-body @close="closeDialog">
             <p class="dialog-text">打印成功</p>
             <el-button type="primary" @click="confirmReject">确认</el-button>
         </el-dialog>
@@ -197,7 +197,8 @@ export default {
       totalRows: -1,
       pageSize: -1,
       sendStr: '',
-      isShowInnerConfirmDialog: false
+      isShowInnerConfirmDialog: false,
+      tableLoading: false
     }
   },
   created: function () {
@@ -205,6 +206,10 @@ export default {
   },
   methods: {
     confirm () {
+      this.search.currentPage = 1
+      this.getTableData()
+    },
+    closeDialog() {
       this.search.currentPage = 1
       this.getTableData()
     },
@@ -220,6 +225,7 @@ export default {
       this.search.printAll = e
     },
     getTableData () {
+      this.tableLoading = true
       let that = this
       this.axios.get('pickManage/pickInfo/selectManualPrintList', {
         params: that.search
@@ -231,13 +237,16 @@ export default {
           that.pageSize = res.data.pageSize
         }
       })
+      this.tableLoading = false
     }, // 执行打印
     toDoPrint () {
+      this.tableLoading = true
       this.axios.get('pickManage/pickInfo/toDoManualPrint', {
         params: this.search
       }).then((res) => {
         if (res.errCode === 'S') {
           this.isShowInnerConfirmDialog = true
+          this.tableLoading = false
           // console.log(res.data.result)
           // that.tableData = res.data.result;
           // that.totalRows = r.totalRows;

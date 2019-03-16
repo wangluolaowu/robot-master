@@ -8,13 +8,17 @@
                 <el-form :inline="true" class="demo-form-inline">
                  
                     <el-form-item>
-                        <el-button type="primary" @click="cancel">取消</el-button>
-                        <el-button type="primary" @click="submit">提交</el-button>
-
+                        <el-button type="primary"  :disabled = "cancelDisabled" @click="cancel">取消</el-button>
+                    </el-form-item>
+                     <el-form-item>
+                     <el-checkbox v-model="search.submitAll"  @change="handleCheckAllChange">提交全部</el-checkbox>
+                    </el-form-item>
+                     <el-form-item>
+                     <el-button type="primary" :disabled = "submitIsDisabled" @click="submit">提交</el-button>
                     </el-form-item>
                 </el-form>
 
-                <el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" style="width: 100%" border @selection-change="handleSelectionChange">
+                <el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" style="width: 100%" border @selection-change="handleSelectionChange" v-loading="tableLoading">
                     <el-table-column type="selection" width="55">
                     </el-table-column>
                     <el-table-column prop="binGrn" label="GRN">
@@ -48,73 +52,17 @@
         </el-col>
     </el-row>
     <!-- 弹层start -->
-    <el-dialog title="任务分配" :visible.sync="isShowDialog" width="90%">
+    <el-dialog title="任务分配" :visible.sync="isShowDialog" width="90%" @close="closeConfirmReject">
         <!-- 搜索区域 -->
         <el-form :inline="true" class="demo-form-inline">
             <el-form-item label="订单总数">
-                <el-input type="text" :rows="2" v-model="dialog.systemReason">
-                </el-input>
+                <span>{{dialog.systemReason}}</span>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="showConfirmDialog">确认打回</el-button>
                 <el-button type="primary" @click="confirmAssign">任务分配</el-button>
             </el-form-item>
         </el-form>
-        <!-- 6个表格 -->
-        <!--
-        <section class="dialog-main">
-            <el-card class="work-station" v-for="(station, i ) in dialogTableData" :key="i">
-                <ul class="station-info">
-                    <li>
-                        <label for="">工作站</label><span>{{i + 1}}</span>
-                    </li>
-                    <li>
-                        <label for="">订单总行数</label><span></span>
-                    </li>
-                    <li>
-                        <label for="">播种墙</label><span></span>
-                    </li>
-                </ul>
-                <ul class="station-list sortable" v-sort>
-                    <li v-for="(item, j) in station.result" :data-from="i" :key="item.route" class="ui-state-default">
-                        <label for="">{{j+1}}</label> <span>{{item.route}}</span></li>
-                </ul>
-            </el-card>
-        </section>
-        -->
-        <!--<el-row :gutter="10">
-          <el-col :span="4" v-for="(item, i) in this.dialogTableData" :key="i">
-            <el-card style="min-height: 520px">
-              <ul class="station-info">
-                  <li>
-                      <label for="">工作站</label><span>{{i + 1}}</span>
-                  </li>
-                  <li>
-                      <label for="">订单总行数</label><span></span>
-                  </li>
-                  <li>
-                      <label for="">播种墙</label><span></span>
-                  </li>
-              </ul>
-              <transition-group>            
-                <draggable v-model="item.result" :options="{group:'people', animation: 300}" @start="startItem" @end="endItem" @change="changeItem" :key="i">
-                    <el-row
-                      class="drag-item"
-                      :class="{gray: element.isChange}"
-                      v-for="(element, index) in item.result"
-                      :key="index">
-                      <el-col :span="6"> <div style="margin-top:3px">{{index + 1}}、</div></el-col>
-                      <el-col :span="18" style="line-height:1.7">
-                        <div>{{ 'route: ' + (element.route  || '') }}</div>
-                        <div>{{ 'dealer: ' + (element.dealerCou  || '') }}</div>
-                        <div>{{ '订单行: ' + (element.lineCou || '') }}</div>                        
-                      </el-col>
-                    </el-row>
-                </draggable>
-              </transition-group>
-            </el-card>        
-          </el-col>
-        </el-row>-->
         </el-dialog>
         <el-dialog width="30%" title="提示" :visible.sync="isShowInnerConfirmDialog" append-to-body>
             <p class="dialog-text">确认全部打回么？</p>
@@ -123,7 +71,7 @@
         </el-dialog>
         <el-dialog width="30%" title="已提交完成" :visible.sync="isShowOkDialog" append-to-body>
             <p class="dialog-text">调配任务已完成</p>
-            <el-button type="primary" @click="isShowOkDialog = false"> OK</el-button>
+            <el-button type="primary" @click="confirmShowOkDialog"> OK</el-button>
         </el-dialog>
     <!-- 弹层end -->
 </div>
@@ -133,14 +81,7 @@
 // 接口数据
 import axios from '../../util/http'
 import draggable from 'vuedraggable'
-/*
-let globalApi = {
-  getTable: 'static/json/table.json',
-  submit: 'static/json/submit.json',
-  confirmReject: 'static/json/confirm-reject.json',
-  confirmAssign: 'static/json/confirm-assign.json'
-}
-*/
+
 export default {
   data () {
     return {
@@ -153,7 +94,10 @@ export default {
         ictDealer: '',
         currentPage: 1
       },
+      cancelDisabled: true,
+      submitIsDisabled: true,
       isShowDialog: false,
+      tableLoading: false,
       totalRows: -1,
       pageSize: -1,
       tableData: [],
@@ -167,6 +111,8 @@ export default {
       id: '', // 点提交后服务器分配的id
       isShowInnerConfirmDialog: false,
       isShowOkDialog: false,
+      updateOk: false,
+      deleteOk: false,
       scope: [],
       sendStr: ''
     }
@@ -181,9 +127,32 @@ export default {
         arr.push(item.binTicketNum)
       })
       this.sendStr = arr.join(',')
+      if (arr.length > 0 || this.submitAll) {
+        this.submitIsDisabled = false
+        this.cancelDisabled = false
+      } else {
+        this.submitIsDisabled = true
+        this.cancelDisabled = true
+      }
       console.log(this.sendStr)
-    },
-    // 弹层上操作
+    }, // 点击是否全部提交
+    handleCheckAllChange (e) {
+      this.search.submitAll = e
+      if (e || this.sendStr.length > 0) {
+        this.submitIsDisabled = false
+        this.cancelDisabled = false
+      } else {
+        this.submitIsDisabled = true
+        this.cancelDisabled = true
+      }
+    }, // 关闭弹层
+    closeConfirmReject () {
+      if (!this.deleteOk && !this.updateOk) {
+        this.confirmReject()
+        this.deleteOk = false
+        this.updateOk = false
+      }
+    }, // 弹层上操作
     showConfirmDialog: function () {
       this.isShowInnerConfirmDialog = true
     }, // 全部打回
@@ -196,9 +165,18 @@ export default {
         if (res.errCode === 'S') {
           console.log(res.data.result)
           // 弹出
+          this.deleteOk = true
           this.isShowInnerConfirmDialog = false
+          this.isShowDialog = false
+          this.getTableData()
         }
       })
+    }, // 确认分配ok
+    confirmShowOkDialog () {
+      this.updateOk = true
+      this.isShowOkDialog = false
+      this.isShowDialog = false
+      this.getTableData()
     },
     confirmAssign () {
       this.axios.get('binningManage/binningInfo/updateDmlBinReviewV', {
@@ -220,14 +198,20 @@ export default {
       }).then((res) => {
         if (res.errCode === 'S') {
           this.dialog.systemReason = res.data.result
+          this.deleteOk = false
+          this.updateOk = false
           this.isShowDialog = true
         }
+        this.handleCheckAllChange(false)
+        this.tableLoading = false
       })
     },
     submit () {
       if (!this.sendStr) {
         return false
       }
+      this.submitIsDisabled = true
+      this.tableLoading = true
       this.axios.get('binningManage/binningInfo/createDmlBinReviewId', {
         params: {
           idList: this.sendStr
@@ -236,6 +220,9 @@ export default {
         if (res.errCode === 'S') {
           this.id = res.data.result
           this.submitSelect()
+        } else {
+          this.submitIsDisabled = false
+          this.tableLoading = false
         }
       })
     },
@@ -245,6 +232,7 @@ export default {
     },
     cancel: function () {
       this.$refs.multipleTable.clearSelection()
+      this.handleCheckAllChange(false)
     },
     handleTabClick: function (tab, event) {
       this.initParams()
@@ -256,7 +244,9 @@ export default {
       this.search.currentPage = 1
     },
     getTableData () { // 创建波次查询列表
+      this.tableLoading = true
       let that = this
+      // this.axios.get('/reloc/createWave/selectDmlPickCreateWaveVList', {
       this.axios.get('binningManage/binningInfo/selectDmlBinCreateWaveInfo', {
         params: that.search
       }).then((res) => {
@@ -265,44 +255,13 @@ export default {
           that.totalRows = res.data.totalRows
           that.pageSize = res.data.pageSize
         }
+        this.tableLoading = false
       })
     },
     handleCurrentChange (val) {
       this.search.currentPage = val
       this.getTableData()
-    },
-    changeItem (val) {
-      if (val.added) {
-        let numberArr = val.added.element.$data.dialogTableData
-        numberArr.forEach((item) => {
-          item.result.forEach((childItem, index) => {
-            childItem.priorityNum = index
-            childItem.wsId = item.wsWorkStationInfo.entityWorkstationId
-            this.dialogTableDataExit.push(childItem)
-          })
-        })
-        this.$set(val.added.element, 'isChange', true)
-        console.log(val.added)
-      }
-      if (val.moved) {
-        this.$set(val.moved.element, 'isChange', true)
-      }
-    },
-    startItem (val) {
-      this.drag = true
-    },
-    endItem (val) {
-      this.drag = false
     }
-  },
-  mounted () {
-    document.body.ondrop = function (event) {
-      event.preventDefault()
-      event.stopPropagation()
-    }
-  },
-  components: {
-    draggable
   }
 }
 </script>

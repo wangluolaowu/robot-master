@@ -8,11 +8,11 @@
           <el-table-column prop="waveC" label="当天已创建波次订单行" width="200"></el-table-column>
           <el-table-column prop="complC" label="当天已完成订单行" width="150"></el-table-column>
           <el-table-column prop="uncomplC" label="当天未完成订单行" width="150"></el-table-column>
-          <el-table-column prop="comingC" label="正在进行中订单行" ></el-table-column>
-          <el-table-column prop="instantRaion" label="瞬时平均效率（行/人/分钟）"></el-table-column>
+          <el-table-column prop="comingC" label="正在进行中订单行" width="160" ></el-table-column>
+          <el-table-column prop="instantRaion" label="瞬时平均效率（行/人/分钟）"  width="230"></el-table-column>
           <!--新添加字段-->
-          <el-table-column prop="comingC1" label="完成百分比" ></el-table-column>
-          <el-table-column prop="comingC2" label="预计完成时间"></el-table-column>
+           <el-table-column prop="complPercent" label="完成百分比" width="100"></el-table-column>
+          <el-table-column prop="forecastComplDate" label="预计完成时间" width="120"></el-table-column>
         </el-table>
       </div>
       <div class="tabConOther">
@@ -22,12 +22,12 @@
           <el-table-column prop="wallCount" label="播种墙数量" width="100"></el-table-column>
           <el-table-column prop="workstationStatus" label="工作状态" width="100"></el-table-column>
           <el-table-column prop="complC" label="当天已完成订单行总数" width="180"></el-table-column>
-          <el-table-column prop="uncomplC" label="已分配且未完成的订单行数量" ></el-table-column>
-          <el-table-column prop="comingC" label="正在进行订单行数量" width="160"></el-table-column>
-          <el-table-column prop="instantRaion" label="瞬时平均效率（行/人/分钟）"></el-table-column>
+          <el-table-column prop="uncomplC" label="已分配且未完成的订单行数量" width="200"></el-table-column>
+          <el-table-column prop="comingC" label="正在进行订单行数量" width="190"></el-table-column>
+          <el-table-column prop="instantRaion" label="瞬时平均效率（行/人/分钟）"  width="220"></el-table-column>
           <!--新添加字段-->
-          <el-table-column prop="comingC1" label="完成百分比" ></el-table-column>
-          <el-table-column prop="comingC2" label="预计完成时间" ></el-table-column>
+          <el-table-column prop="complPercent" label="完成百分比" width="100"></el-table-column>
+          <el-table-column prop="forecastComplDate" label="预计完成时间" width="120"></el-table-column>
         </el-table>
         <el-pagination v-if="VOrderListSearch.totalRows>0" class="pagination" background @current-change="VOrderListSearchHandleCurrentChange"
                        :current-page.sync="VOrderListSearch.currentPage" :page-size="VOrderListSearch.pageSize" :page-sizes="[VOrderListSearch.pageSize]" layout="total, sizes, prev, pager, next, jumper"
@@ -44,15 +44,15 @@
 
           <el-table-column prop="uncomplC" label="当天未完成订单行" width="150"></el-table-column>
           <el-table-column prop="comingC" label="正在进行中订单行" width="150"></el-table-column>
-          <el-table-column prop="instantRaion" label="瞬时平均效率（行/人/分钟）"></el-table-column>
+          <el-table-column prop="instantRaion" label="瞬时平均效率（行/人/分钟）" width="220"></el-table-column>
           <!--新添加字段-->
-          <el-table-column prop="comingC1" label="完成百分比"></el-table-column>
-          <el-table-column prop="comingC2" label="预计完成时间"></el-table-column>
+           <el-table-column prop="complPercent" label="完成百分比" width="100"></el-table-column>
+          <el-table-column prop="forecastComplDate" label="预计完成时间" width="120"></el-table-column>
         </el-table>
       </div>
       <div class="tabConOther">
         <h4 class="h2">拣货-S单</h4>
-        <el-table :data='tableData.SOrderList' highlight-current-row v-loading="tableLoading" border>
+        <el-table :data='tableData.SOrderList' highlight-current-row v-loading="tableLoading" style="width: 100%" border>
           <el-table-column prop="entityWorkstationId" label="工作站编号" width="100"></el-table-column>
           <el-table-column prop="wallCount" label="播种墙数量" width="100"></el-table-column>
           <el-table-column prop="workstationStatus" label="工作状态" width="100"></el-table-column>
@@ -60,10 +60,10 @@
 
           <el-table-column prop="uncomplC" label="已分配且未完成的订单行数量"></el-table-column>
           <el-table-column prop="comingC" label="正在进行订单行数量"></el-table-column>
-          <el-table-column prop="instantRaion" label="瞬时平均效率（行/人/分钟）"></el-table-column>
+          <el-table-column prop="instantRaion" label="瞬时平均效率（行/人/分钟）"  width="220"></el-table-column>
           <!--新添加字段-->
-          <el-table-column prop="comingC1" label="完成百分比" ></el-table-column>
-          <el-table-column prop="comingC2" label="预计完成时间" ></el-table-column>
+          <el-table-column prop="complPercent" label="完成百分比" ></el-table-column>
+          <el-table-column prop="forecastComplDate" label="预计完成时间"></el-table-column>
         </el-table>
         <el-pagination v-if="SOrderListSearch.totalRows>0" class="pagination" background @current-change="SOrderListHandleCurrentChange"
                        :current-page.sync="SOrderListSearch.currentPage" :page-size="SOrderListSearch.pageSize" :page-sizes="[SOrderListSearch.pageSize]" layout="total, sizes, prev, pager, next, jumper"
@@ -82,8 +82,8 @@
           <el-table-column prop="complC" label="已完成订单数量" width="130"></el-table-column>
           <el-table-column prop="instantRaion" label="瞬时平均效率（行/人/分钟）"  width="220"></el-table-column>
           <!--新添加字段-->
-          <el-table-column prop="comingC1" label="完成百分比" width="100"></el-table-column>
-          <el-table-column prop="comingC2" label="预计完成时间" width="120"></el-table-column>
+          <el-table-column prop="complPercent" label="完成百分比" width="100"></el-table-column>
+          <el-table-column prop="forecastComplDate" label="预计完成时间" width="120"></el-table-column>
         </el-table>
       </div>
       <div class="tabConOther">
@@ -98,8 +98,8 @@
           <el-table-column prop="comingC" label="正在进行订单行数量" width="160"></el-table-column>
           <el-table-column prop="instantRaion" label="瞬时平均效率（行/人/分钟）" width="220"></el-table-column>
           <!--新添加字段-->
-          <el-table-column prop="comingC1" label="完成百分比" width="100"></el-table-column>
-          <el-table-column prop="comingC2" label="预计完成时间" width="120"></el-table-column>
+          <el-table-column prop="complPercent" label="完成百分比" width="100"></el-table-column>
+          <el-table-column prop="forecastComplDate" label="预计完成时间" width="120"></el-table-column>
         </el-table>
         <el-pagination v-if="PutawayListSearch.totalRows>0" class="pagination" background @current-change="PutawayListSearchHandleCurrentChange"
                        :current-page.sync="PutawayListSearch.currentPage" :page-size="PutawayListSearch.pageSize" :page-sizes="[PutawayListSearch.pageSize]" layout="total, sizes, prev, pager, next, jumper"
@@ -249,18 +249,24 @@ export default {
     }
   },
   // 页面加
-  mounted () {
-    this.getPutaway()
-    this.getPutawayData()
-    this.getSData()
-    this.getVData()
-    this.getVAllData()
-    this.getSAllData()
-    this.drawLine()
-    this.getDayTime()
-    this.getMonth()
+  mounted () {},
+  created () {
+    window.setInterval(() => {
+      setTimeout(this.getTimeOut(), 0)
+    }, 60000)
   },
   methods: {
+    getTimeOut() {
+      this.getPutaway()
+      this.getPutawayData()
+      this.getSData()
+      this.getVData()
+      this.getVAllData()
+      this.getSAllData()
+      this.drawLine()
+    },
+    getDayTime() {
+    },
     getVAllData () { // 获取拣货V单汇总
       let that = this
       this.axios.get('kanban/orderKanban/selectDmlPickDeliveryStatList', {
@@ -282,8 +288,6 @@ export default {
         if (res.errCode === 'S') {
           console.log(res)
           that.tableData.VOrderList = res.data.result
-          that.VOrderListSearch.totalRows = res.data.totalRows
-          that.VOrderListSearch.pageSize = res.data.pageSize
         }
       })
     }, // V单分页
@@ -317,8 +321,6 @@ export default {
       }).then((res) => {
         if (res.errCode === 'S') {
           that.tableData.SOrderList = res.data.result
-          that.SOrderListSearch.totalRows = res.data.totalRows
-          that.SOrderListSearch.pageSize = res.data.pageSize
         }
       })
     },
@@ -343,8 +345,6 @@ export default {
         if (res.errCode === 'S') {
           console.log(res.data.result)
           that.tableData.PutawayList = res.data.result
-          that.PutawayListSearch.totalRows = res.data.totalRows
-          that.PutawayListSearch.pageSize = res.data.pageSize
         }
       })
     }, // 上架分页
@@ -392,18 +392,6 @@ export default {
           barWidth: 30
         }]
       })
-    },
-    formatDate(date) {
-      let myyear = date.getFullYear()
-      let mymonth = date.getMonth() + 1
-      let myweekday = date.getDate()
-      if (mymonth < 10) {
-        mymonth = '0' + mymonth
-      }
-      if (myweekday < 10) {
-        myweekday = '0' + myweekday
-      }
-      return (myyear + '-' + mymonth + '-' + myweekday)
     }
   }
 }

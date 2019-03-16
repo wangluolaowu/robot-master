@@ -34,13 +34,24 @@ axiosInstance.interceptors.response.use(res => {
   return Promise.reject(err.res.data.errorDefaultMessage || err.res.data.errorMessage)
 })
 export default {
+  postD (url, data = {}) {
+    return axiosInstance({
+      method: 'post',
+      url,
+      data,
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded; multipart/form-data;application/json;charset=UTF-8'
+      },
+      responseType: 'blob'
+    })
+  },
   post (url, data = {}) {
     return axiosInstance({
       method: 'post',
       url,
       data,
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded; application/json;charset=UTF-8'
+        'Content-Type': 'application/x-www-form-urlencoded; multipart/form-data;application/json;charset=UTF-8'
       }
     })
   },

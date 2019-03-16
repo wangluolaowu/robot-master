@@ -3,69 +3,46 @@
     <el-row>
         <el-col :span="23" class="main">
             <div class="grid-content bg-purple-dark">
-                <el-tabs v-model="search.orderType" @tab-click="handleTabClick">
-                    <el-tab-pane label="订单类型S" name="S"></el-tab-pane>
-                    <el-tab-pane label="订单类型V" name="V"></el-tab-pane>
-                </el-tabs>
-                <!-- 搜索区域 -->
-                <el-form :inline="true" class="demo-form-inline">
-                    <el-form-item label="ISP dealer：">
-                        <el-select placeholder="所属平台" v-model="search.ispDealer">
-                            <el-option label="全部" value=""></el-option>
-                            <el-option label="是" value="1"></el-option>
-                            <el-option label="否" value="2"></el-option>
-                            <!-- <el-option :label="item.platformName" :key="item.clientType" :value="item.clientType" v-for="item in platformTypeList"></el-option> -->
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item label="ICT dealer：">
-                        <el-select placeholder="所属平台" v-model="search.ictDealer">
-                            <el-option label="全部" value=""></el-option>
-                            <el-option label="是" value="1"></el-option>
-                            <el-option label="否" value="2"></el-option>
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item>
-                        <el-button type="primary" @click="confirm">确认</el-button>
-                        <el-button type="primary" @click="cancel">取消</el-button>
-                    </el-form-item>
-                    <el-form-item>
-                     <el-checkbox v-model="search.submitAll" @change="handleCheckAllChange">提交全部</el-checkbox>
-                    </el-form-item>
-                    <el-form-item>
-                       <el-button type="primary" @click="submit" :loading="subMitButtonLoading">提交</el-button>
-                    </el-form-item>
-                </el-form>
-
-                <el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" style="width: 100%" border @selection-change="handleSelectionChange">
+            <el-form class="demo-form-inline">
+              <el-form-item :span="20">
+                    <el-tooltip class="item" effect="dark" content="下载数据集模板" placement="bottom">
+                        <el-button icon="yx-download3" @click="SetDownloadFunc">下载excel模板 </el-button>
+                    </el-tooltip>
+              </el-form-item>
+              <el-form-item :span="20">
+             <el-upload
+                class="upload-demo"
+                action=""
+                :on-preview="handlePreview"
+                :on-remove="handleRemove"
+                :before-remove="beforeRemove"
+                :before-upload="beforeUpload"
+                multiple
+                :limit="3"
+                :on-exceed="handleExceed"
+                :file-list="fileList">
+                <el-button size="small" type="primary">点击上传</el-button>
+                <div slot="tip" class="el-upload__tip">只能上传xls,xlsx文件，且不超过500kb</div>
+              </el-upload>
+              </el-form-item>
+              
+                <el-form-item>
+                      <el-button type="primary" :disabled = "submitIsDisabled" @click="submit">提交</el-button>
+                      <el-button type="primary" :disabled = "cancelIsDisabled" @click="cancel">取消</el-button>
+                </el-form-item>
+               </el-form>
+                <el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" style="width: 100%" border @selection-change="handleSelectionChange" v-loading="tableLoading">
                     <el-table-column type="selection" width="55">
                     </el-table-column>
-                    <el-table-column prop="orderHeaderId" label="orderHeaderId" v-show="false">
+                    <el-table-column prop="locNum" label="Bin位号">
                     </el-table-column>
-                    <el-table-column prop="dealerAccount" label="客户编码">
-                    </el-table-column>
-                    <el-table-column prop="custName" label="客户名称">
-                    </el-table-column>
-                    <el-table-column prop="wip" label="WIP号">
-                    </el-table-column>
-                    <el-table-column prop="wipLine" label="WIP订单行" width="100">
-                    </el-table-column>
-                    <el-table-column prop="pickTicketNum" label="备货标签">
-                    </el-table-column>
-                    <el-table-column prop="route" label="路线">
-                    </el-table-column>
-                    <el-table-column prop="orderType" label="订单类型">
-                    </el-table-column>
-                    <el-table-column prop="locNum" label="货架位">
-                    </el-table-column>
-                    <el-table-column prop="skuNum" label="零件号码">
+                    <el-table-column prop="skuNum" label="零件编码">
                     </el-table-column>
                     <el-table-column prop="skuName" label="零件描述">
                     </el-table-column>
-                    <el-table-column prop="qty" label="数量">
+                    <el-table-column prop="skuQty" label="数量" width="100">
                     </el-table-column>
-                    <el-table-column prop="ispDealer" label="ISP经销商">
-                    </el-table-column>
-                    <el-table-column prop="ictDealer" label="ICT经销商">
+                    <el-table-column prop="date" label="导入时间">
                     </el-table-column>
                 </el-table>
                 <el-pagination v-if="totalRows>0" class="pagination" background @current-change="handleCurrentChange" :current-page.sync="search.currentPage" :page-size="pageSize" :page-sizes="[pageSize]" layout="total, sizes, prev, pager, next, jumper" :total="totalRows">
@@ -74,7 +51,7 @@
         </el-col>
     </el-row>
     <!-- 弹层start -->
-    <el-dialog title="任务分配" :visible.sync="isShowDialog" width="90%" @close='confirmReject'>
+    <el-dialog title="任务分配" :visible.sync="isShowDialog" width="90%" @close='closeConfirmReject'>
         <!-- 搜索区域 -->
         <el-form :inline="true" class="demo-form-inline">
             <el-form-item label="系统预分配原因">
@@ -100,9 +77,6 @@
                   <li>
                       <label for="">订单总行数</label><span>{{item.orderListCount}}</span>
                   </li>
-                  <li>
-                      <label for="">播种墙</label><span>{{item.forecastWallCount}}</span>
-                  </li>
               </ul>
               <transition-group>            
                 <draggable v-model="item.result" :options="{group:'people', animation: 300}" @start="startItem" @end="endItem" @change="changeItem" :key="i">
@@ -113,9 +87,8 @@
                       :key="index">
                       <el-col :span="6"> <div style="margin-top:3px">{{index + 1}}、</div></el-col>
                       <el-col :span="18" style="line-height:1.7">
-                        <div>{{ 'route: ' + (element.route  || '') }}</div>
-                        <div>{{ 'dealer: ' + (element.dealerCou  || '') }}</div>
-                        <div>{{ '订单行: ' + (element.lineCou || '') }}</div>                        
+                        <div>{{ '货架数量: ' + (element.holderCou  || '') }}</div>
+                        <div>{{ 'Bin位数量: ' + (element.locCou || '') }}</div>                        
                       </el-col>
                     </el-row>
                 </draggable>
@@ -131,7 +104,7 @@
         </el-dialog>
         <el-dialog width="30%" title="已提交完成" :visible.sync="isShowOkDialog" append-to-body>
             <p class="dialog-text">调配任务已完成</p>
-            <el-button type="primary" @click="isShowOkDialog = false"> OK</el-button>
+            <el-button type="primary" @click="confirmShowOkDialog"> OK</el-button>
         </el-dialog>
     <!-- 弹层end -->
 </div>
@@ -150,13 +123,16 @@ export default {
       draggable,
       drag: false,
       search: { // 查询参数
-        orderType: 'S',
+        orderType: 'RELOC',
         ispDealer: '',
         ictDealer: '',
         currentPage: 1,
-        submitAll: false
+        submitAll: true
       },
+      tableLoading: false,
       isShowDialog: false,
+      submitIsDisabled: true,
+      cancelIsDisabled: true,
       totalRows: -1,
       pageSize: -1,
       tableData: [],
@@ -171,28 +147,89 @@ export default {
       isShowInnerConfirmDialog: false,
       isShowOkDialog: false,
       scope: [],
-      sendStr: '',
-      subMitButtonLoading: false
+      sendStr: [],
+      updateOk: false,
+      deleteOk: false,
+      fileList: []
     }
   },
   created: function () {
-    this.getTableData()
+    // this.getTableData()
   },
-  methods: {
+  methods: { // 下载excel模板
+    SetDownloadFunc () {
+      this.axios.postD('reloc/createWave/downloadExcelTemplate', {}).then(res => {
+        const content = res
+        const blob = new Blob([content], {type: 'application/vnd.ms-excel'})
+        const fileName = '测试表格123.xlsx'
+        if ('download' in document.createElement('a')) { // 非IE下载
+          const elink = document.createElement('a')
+          elink.download = fileName
+          elink.style.display = 'none'
+          elink.href = URL.createObjectURL(blob)
+          document.body.appendChild(elink)
+          elink.click()
+          URL.revokeObjectURL(elink.href) // 释放URL 对象
+          document.body.removeChild(elink)
+        } else { // IE10+下载
+          navigator.msSaveBlob(blob, fileName)
+        }
+      })
+    },
+    beforeUpload (file, fileList) {
+      this.tableLoading = true
+      let fd = new FormData()
+      fd.append('file', file)
+      this.axios.post('reloc/createWave/reportExcelTemplate', fd).then(res => {
+        if (res.code === 'S') {
+          this.tableData = res.result
+          this.$message.warning('文件导入成功')
+        } else {
+          this.$message.warning('文件导入成功')
+        }
+        this.tableLoading = false
+      })
+    },
+    handleRemove(file, fileList) {
+      console.log(file, fileList)
+    },
+    handlePreview(file) {
+      console.log(file)
+    },
+    handleExceed(files, fileList) {
+      this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`)
+    },
+    beforeRemove(file, fileList) {
+      return this.$confirm(`确定移除 ${file.name}？`)
+    },
     handleSelectionChange (val) {
       let arr = []
       val.map(item => {
-        arr.push(item.orderHeaderId)
+        arr.push(item)
       })
-      this.sendStr = arr.join(',')
+      this.sendStr = arr
       console.log(this.sendStr)
+      if (arr.length > 0) {
+        this.cancelIsDisabled = false
+        this.submitIsDisabled = false
+      } else {
+        this.cancelIsDisabled = true
+        this.submitIsDisabled = true
+      }
+    }, // 关闭弹层
+    closeConfirmReject () {
+      if (!this.deleteOk && !this.updateOk) {
+        this.confirmReject()
+        this.deleteOk = false
+        this.updateOk = false
+      }
     },
     // 弹层上操作
     showConfirmDialog: function () {
       this.isShowInnerConfirmDialog = true
     }, // 全部打回
     confirmReject: function () {
-      this.axios.get('pickManage/pickInfo/deleteDmlPickReviewV', {
+      this.axios.get('reloc/createWave/deleteRelocInfoList', {
         params: {
           orderWaveId: this.id
         }
@@ -200,20 +237,22 @@ export default {
         if (res.errCode === 'S') {
           console.log(res.data.result)
           // 弹出层
-          this.dialogTableData = this.dialogTableDataExit
+          this.deleteOk = true
           this.isShowInnerConfirmDialog = false
           this.isShowDialog = false
-          this.getTableData()
+          this.tableData = []
         }
       })
+    }, // 确认分配ok
+    confirmShowOkDialog () {
+      this.updateOk = true
+      this.isShowOkDialog = false
+      this.isShowDialog = false
+      this.tableData = []
     },
     confirmAssign () {
       let dataResult = {}
       let result = []
-      // $.extend(dataResult, this.dialog)
-      // data.result = this.dialogTableData;
-      // console.log('data===========' + JSON.stringify(dataResult))
-      // console.log('dialogTableData===========' + JSON.stringify(this.dialogTableData))
       this.dialogTableData.map((list, i) => {
         let wsid = list.wsid
         let newWsid = list.newWsid
@@ -229,7 +268,7 @@ export default {
       dataResult.result = JSON.stringify(result)
       dataResult.reason = JSON.stringify(this.dialog)
       dataResult.orderWaveId = this.id
-      this.axios.post('pickManage/pickInfo/updateDmlPickReviewV', qs.stringify(dataResult)).then(res => {
+      this.axios.post('reloc/createWave/updateRelocInfoList', qs.stringify(dataResult)).then(res => {
         if (res.errCode === 'S') {
           console.log(res.data.result)
           this.isShowOkDialog = true // 弹出层 分配成功
@@ -237,7 +276,7 @@ export default {
       })
     }, // 确认创建波次
     submitSelect () {
-      this.axios.get('pickManage/pickInfo/selectDmlPickReviewVList', {
+      this.axios.get('reloc/createWave/selectRelocInfoList', {
         params: {
           orderWaveId: this.id,
           orderType: this.search.orderType
@@ -250,26 +289,32 @@ export default {
             }
             return item
           })
-          this.subMitButtonLoading = false
+          this.deleteOk = false
+          this.updateOk = false
           this.isShowDialog = true
         }
+        this.$message.warning('提交失败')
+        this.submitIsDisabled = false
+        this.tableLoading = false
       })
     },
     submit () {
-      // if (!this.sendStr) {
-      // return false
-      // }
-      this.subMitButtonLoading = true
-      this.axios.get('pickManage/pickInfo/createDmlPickReviewId', {
-        params: {
-          idList: this.sendStr,
-          submitAll: this.search.submitAll,
-          orderType: this.search.orderType
-        }
-      }).then((res) => {
+      this.submitIsDisabled = true
+      this.tableLoading = true
+      let dataResult = {}
+      console.log('JSON.stringify(this.sendStr)==========' + JSON.stringify(this.sendStr))
+      dataResult.result = JSON.stringify(this.sendStr)
+      dataResult.submitAll = this.search.submitAll
+      dataResult.orderType = this.search.orderType
+      dataResult.idList = ''
+      this.axios.post('reloc/createWave/createWaveId', qs.stringify(dataResult)).then((res) => {
         if (res.errCode === 'S') {
           this.id = res.data.result
           this.submitSelect()
+        } else {
+          this.submitIsDisabled = false
+          this.tableLoading = false
+          this.$message.warning('提交失败')
         }
       })
     }, // 点击是否全部提交
