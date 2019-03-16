@@ -368,6 +368,14 @@ export default {
     },
     endItem (val) {
       this.drag = false
+      this.dialogTableData.map((list, i) => {
+        let orderCount = 0  
+        list.result.map((item, j) => {
+          orderCount = Number(item.lineCou) + Number(orderCount)
+          return item
+        })
+        list.orderListCount = Number(orderCount)
+      })
     }
   },
   mounted () {

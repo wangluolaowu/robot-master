@@ -67,9 +67,9 @@
             </el-col>
             <el-col :span="8">
             <el-form-item label="网络供应商">
-                <el-select placeholder="没有" v-model="search.ict5">
-                    <el-option label="没有" value="0"></el-option>
-                    <el-option label="有" value="1"></el-option>
+                <el-select placeholder="没有" v-model="search.attribute18">
+                    <el-option label="没有" value="N"></el-option>
+                    <el-option label="有" value="Y"></el-option>
                 </el-select>
             </el-form-item>
             </el-col>

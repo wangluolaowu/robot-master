@@ -79,8 +79,6 @@ export default {
         if (res.errCode === 'S') {
           console.log(res.data.result)
           that.tableData.list = res.data.result
-          that.listSearch.totalRows = res.data.totalRows
-          that.listSearch.pageSize = res.data.pageSize
         }
       })
     }, // 单分页

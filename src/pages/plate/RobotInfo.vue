@@ -50,7 +50,7 @@
         </el-table-column>
         <el-table-column prop="destPosY" label="目标位置Y" width="100">
         </el-table-column>
-        <el-table-column prop="object_Id" label="货架编码" width="100">
+        <el-table-column prop="objectId" label="货架编码" width="100">
         </el-table-column>
         <el-table-column prop="wsId" label="工作站编码" width="100">
         </el-table-column>
@@ -158,8 +158,6 @@ export default {
         if (res.errCode === 'S') {
           console.log(res.data.result)
           that.tableData.list = res.data.result
-          that.listSearch.totalRows = res.data.totalRows
-          that.listSearch.pageSize = res.data.pageSize
         }
       })
     },
@@ -176,8 +174,6 @@ export default {
         if (res.errCode === 'S') {
           console.log(res.data.result)
           that.tableData.list1 = res.data.result
-          that.list1Search.totalRows = res.data.totalRows
-          that.list1Search.pageSize = res.data.pageSize
         }
       })
     },
@@ -194,8 +190,6 @@ export default {
         if (res.errCode === 'S') {
           console.log(res.data.result)
           that.tableData.list2 = res.data.result
-          that.list2Search.totalRows = res.data.totalRows
-          that.list2Search.pageSize = res.data.pageSize
         }
       })
     },
