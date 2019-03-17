@@ -84,4 +84,5 @@ export default {
     font-weight: bold;
     margin:10px 0;
   }
+  
 </style>

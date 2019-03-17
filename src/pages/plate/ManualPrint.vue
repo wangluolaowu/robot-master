@@ -25,6 +25,7 @@
                 </el-select>
             </el-form-item>
             </el-col>
+            
              <el-col :span="8">
               <el-form-item label="订单号" >
                  <el-input v-model="search.attribute03"></el-input>

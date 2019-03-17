@@ -369,7 +369,7 @@ export default {
     endItem (val) {
       this.drag = false
       this.dialogTableData.map((list, i) => {
-        let orderCount = 0  
+        let orderCount = 0
         list.result.map((item, j) => {
           orderCount = Number(item.lineCou) + Number(orderCount)
           return item
@@ -389,6 +389,7 @@ export default {
   }
 }
 </script>
+
 
 <style>
   .drag-item {border:1px solid #ddd ; background: #f9f9f9; padding: 10px; margin-top: 10px; cursor: pointer;}

@@ -17,7 +17,6 @@
                      <el-button type="primary" :disabled = "submitIsDisabled" @click="submit">提交</el-button>
                     </el-form-item>
                 </el-form>
-
                 <el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" style="width: 100%" border @selection-change="handleSelectionChange" v-loading="tableLoading">
                     <el-table-column type="selection" width="55">
                     </el-table-column>

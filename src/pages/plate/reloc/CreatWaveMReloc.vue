@@ -166,6 +166,7 @@ export default {
   color: dimgrey;
 }
 
+
   .drag-item {border:1px solid #ddd ; background: #f9f9f9; padding: 10px; margin-top: 10px; cursor: pointer;}
   .gray {background: #026780; color: #ffffff;}
 </style>
