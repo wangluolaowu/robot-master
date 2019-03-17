@@ -6,7 +6,7 @@
       </el-table-column>
       <el-table-column prop="wallCount" label="播种墙数量">
       </el-table-column>
-      <el-table-column prop="order_num3" label="是否在线">
+      <el-table-column prop="order_num3" v-model="isShow" label="是否在线">
       </el-table-column>
       <el-table-column prop="workstationStatus" label="工位状态">
       </el-table-column>
@@ -35,8 +35,8 @@ export default {
         totalRows: -1,
         pageSize: -1,
         currentPage: 1
-      }
-
+      },
+      isShow:'',
     }
   },
   mounted () {
@@ -49,8 +49,16 @@ export default {
         params: that.listSearch
       }).then((res) => {
         if (res.errCode === 'S') {
-          console.log(res.data.result)
-          that.tableData.list = res.data.result
+          console.log('工作信息>>>>'+JSON.stringify(res.data.result))
+          // console.log((res.data.result[1].wallCount)
+          that.tableData.list = res.data.result;
+         /* if (that.tableData.list.order_num3==null) {
+            that.isShow = '否'
+          }else {
+            that.isShow = '是'
+          }*/
+          that.listSearch.totalRows = res.data.totalRows
+          that.listSearch.pageSize = res.data.pageSize
         }
       })
     },
@@ -77,5 +85,15 @@ export default {
     margin:10px 0;
     font-size: 18px;
     font-weight: bold;
+  }
+
+</style>
+<style>
+ .el-table__row td .cell,.has-gutter tr th .cell{
+    text-align: center!important;
+    color: #000!important;
+  }
+  .pagination{
+    text-align: right;
   }
 </style>

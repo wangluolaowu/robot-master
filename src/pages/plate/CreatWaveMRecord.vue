@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="mainContainer">
     <el-row>
       <el-col :span="23" class="main">
         <div class="grid-content bg-purple-dark">
@@ -9,30 +9,85 @@
           </el-tabs>
           <!-- 搜索区域 -->
           <el-form :inline="true" class="demo-form-inline">
-            <el-form-item label="初始日期" prop>
-              <el-date-picker
-                v-model="search.startTime"
-                format="yyyy-MM-dd HH:mm:ss"
-                value-format="yyyy-MM-dd HH:mm:ss"
-                type="datetime"
-                placeholder="请选择完成日期"
-                @change="cc"
-              ></el-date-picker>
-            </el-form-item>
-            <el-form-item label="截止日期日期" prop>
-              <el-date-picker
-                v-model="search.endTime"
-                format="yyyy-MM-dd HH:mm:ss"
-                value-format="yyyy-MM-dd HH:mm:ss"
-                type="datetime"
-                placeholder="请选择完成日期"
-              ></el-date-picker>
-            </el-form-item>
-
-            <el-form-item>
-              <el-button type="primary" @click="confirm">查找</el-button>
-              <el-button type="primary" @click="cancel">清空</el-button>
-            </el-form-item>
+            <el-row :span="16">
+              <el-col :span="8">
+                <el-form-item label="初始日期" prop>
+                  <el-date-picker
+                    v-model="search.startTime"
+                    format="yyyy-MM-dd HH:mm:ss"
+                    value-format="yyyy-MM-dd HH:mm:ss"
+                    type="datetime"
+                    placeholder="请选择完成日期"
+                    @change="cc"
+                  ></el-date-picker>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="截止日期日期" prop>
+                  <el-date-picker
+                    v-model="search.endTime"
+                    format="yyyy-MM-dd HH:mm:ss"
+                    value-format="yyyy-MM-dd HH:mm:ss"
+                    type="datetime"
+                    placeholder="请选择完成日期"
+                  ></el-date-picker>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row :span="24">
+              <el-col :span="8" style="padding-left: 68px;box-sizing: border-box;">
+                  <el-select style="width: 85px;" v-model="groupOneSel">
+                    <el-option v-for="item in groupOneOptL"
+                               :key="item.value"
+                               :label="item.label"
+                               :value="item.value">
+                    </el-option>
+                  </el-select>
+                  <el-select style="width: 85px;" v-model="groupOneSel2">
+                  <el-option v-for="item in groupOneOptM"
+                             :key="item.value"
+                             :label="item.label"
+                             :value="item.value">
+                  </el-option>
+                </el-select>
+                  <el-select style="width: 85px;" v-model="groupOneSel3">
+                  <el-option v-for="item in groupOneOptR"
+                             :key="item.value"
+                             :label="item.label"
+                             :value="item.value">
+                  </el-option>
+                </el-select>
+              </el-col>
+              <el-col :span="8" style="padding-left: 93px;box-sizing: border-box;">
+                <el-select style="width: 85px;" v-model="groupTwoSel">
+                  <el-option v-for="item in groupOptLeft"
+                             :key="item.value"
+                             :label="item.label"
+                             :value="item.value">
+                  </el-option>
+                </el-select>
+                <el-select style="width: 85px;" v-model="groupTwoSel2">
+                  <el-option v-for="item in groupOptM"
+                             :key="item.value"
+                             :label="item.label"
+                             :value="item.value">
+                  </el-option>
+                </el-select>
+                <el-select style="width: 85px;" v-model="groupTwoSel3">
+                  <el-option v-for="item in groupOptR"
+                             :key="item.value"
+                             :label="item.label"
+                             :value="item.value">
+                  </el-option>
+                </el-select>
+              </el-col>
+              <el-col :span="5">
+                <el-form-item id="groupBtn">
+                  <el-button type="primary" @click="confirm">查找</el-button>
+                  <el-button type="primary" @click="cancel">清空</el-button>
+                </el-form-item>
+              </el-col>
+            </el-row>
           </el-form>
 
 
@@ -100,7 +155,109 @@ export default {
         totalRows: -1,
         pageSize: 5
       },
-      dialogTableData: []
+      dialogTableData: [],
+      groupOneSel:'',
+      groupOneSel2:'',
+      groupOneSel3:'',
+      groupTwoSel:'',
+      groupTwoSel2:'',
+      groupTwoSel3:'',
+      groupOneOptL:[{
+        value: '选项1',
+        label: '1'
+      }, {
+        value: '选项2',
+        label: '2'
+      }, {
+        value: '选项3',
+        label: '3'
+      }, {
+        value: '选项4',
+        label: '4'
+      }, {
+        value: '选项5',
+        label: '5'
+      }],
+      groupOneOptM:[{
+        value: '选项1',
+        label: '1'
+      }, {
+        value: '选项2',
+        label: '2'
+      }, {
+        value: '选项3',
+        label: '3'
+      }, {
+        value: '选项4',
+        label: '4'
+      }, {
+        value: '选项5',
+        label: '5'
+      }],
+      groupOneOptR:[{
+        value: '选项1',
+        label: '1'
+      }, {
+        value: '选项2',
+        label: '2'
+      }, {
+        value: '选项3',
+        label: '3'
+      }, {
+        value: '选项4',
+        label: '4'
+      }, {
+        value: '选项5',
+        label: '5'
+      }],
+      groupOptLeft:[{
+        value: '选项1',
+        label: '1'
+      }, {
+        value: '选项2',
+        label: '2'
+      }, {
+        value: '选项3',
+        label: '3'
+      }, {
+        value: '选项4',
+        label: '4'
+      }, {
+        value: '选项5',
+        label: '5'
+      }],
+      groupOptM:[{
+        value: '选项1',
+        label: '1'
+      }, {
+        value: '选项2',
+        label: '2'
+      }, {
+        value: '选项3',
+        label: '3'
+      }, {
+        value: '选项4',
+        label: '4'
+      }, {
+        value: '选项5',
+        label: '5'
+      }],
+      groupOptR:[{
+        value: '选项1',
+        label: '1'
+      }, {
+        value: '选项2',
+        label: '2'
+      }, {
+        value: '选项3',
+        label: '3'
+      }, {
+        value: '选项4',
+        label: '4'
+      }, {
+        value: '选项5',
+        label: '5'
+      }],
     }
   },
   mounted() {
@@ -112,10 +269,10 @@ export default {
       this.search.currentPage = val
       this.getTableData()
     },
-    confirm() {
+    confirm() {//点击查找执行的操作
 
     },
-    cancel() {
+    cancel() {//点击清空时应执行的操作
 
     },
     handleTabClick: function (tab, event) {
@@ -151,22 +308,44 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-.WorkstationBox {
-  overflow:auto;
-  white-space: nowrap;
-}
-.Workstation {
-  box-shadow: 1px 1px 5px #888888;
-  margin: 10px;
-  width: 300px;
-  display: inline-table;
-  vertical-align: top;
-}
+  .WorkstationBox {
+    overflow:auto;
+    white-space: nowrap;
+  }
+  .Workstation {
+    box-shadow: 1px 1px 5px #888888;
+    margin: 10px;
+    width: 300px;
+    display: inline-table;
+    vertical-align: top;
+  }
+  .activated {
+    color: dimgrey;
+  }
+  .drag-item {
+    border:1px solid #ddd ;
+    background: #f9f9f9;
+    padding: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+  }
+  #mainContainer .el-form{
+    margin: 15px auto;
+  }
+  #groupBtn .el-button{
+    display: inline-block;
+    width: 80px;
+    height: 40px;
+    margin-right: 15px;
+  }
+  .gray {
+    background: #026780;
+    color: #ffffff;
+  }
+</style>
+<style>
+  .pagination{
+    text-align: right;
+  }
 
-.activated {
-  color: dimgrey;
-}
-
-  .drag-item {border:1px solid #ddd ; background: #f9f9f9; padding: 10px; margin-top: 10px; cursor: pointer;}
-  .gray {background: #026780; color: #ffffff;}
 </style>

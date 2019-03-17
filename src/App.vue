@@ -61,4 +61,19 @@ body {
 .fade-leave-active {
 	opacity: 0;
 }
+.fade-enter-active,
+.fade-leave-active {
+  transition: all .2s ease;
+}
+.fade-enter,
+.fade-leave-active {
+  opacity: 0;
+}
+#app .title{
+  font-size: 24px;
+  font-weight: bolder;
+}
+  #app .el-breadcrumb__item .el-breadcrumb__inner,#app .el-breadcrumb__item .el-breadcrumb__separator{
+    font-size: 18px;
+  }
 </style>

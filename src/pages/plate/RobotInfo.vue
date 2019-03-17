@@ -220,4 +220,11 @@ export default {
     font-weight: bold;
   }
 </style>
-
+<style>
+   .el-table__row td .cell{
+    text-align: center!important;
+  }
+  .pagination{
+    text-align: right!important;
+  }
+</style>

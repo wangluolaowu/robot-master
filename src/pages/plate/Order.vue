@@ -8,11 +8,11 @@
           <el-table-column prop="waveC" label="当天已创建波次订单行" width="200"></el-table-column>
           <el-table-column prop="complC" label="当天已完成订单行" width="150"></el-table-column>
           <el-table-column prop="uncomplC" label="当天未完成订单行" width="150"></el-table-column>
-          <el-table-column prop="comingC" label="正在进行中订单行" width="160" ></el-table-column>
-          <el-table-column prop="instantRaion" label="瞬时平均效率（行/人/分钟）"  width="230"></el-table-column>
+          <el-table-column prop="comingC" label="正在进行中订单行"  width="200"></el-table-column>
+          <el-table-column prop="instantRaion" label="瞬时平均效率（行/人/分钟）" width="220"></el-table-column>
           <!--新添加字段-->
-           <el-table-column prop="complPercent" label="完成百分比" width="100"></el-table-column>
-          <el-table-column prop="forecastComplDate" label="预计完成时间" width="120"></el-table-column>
+           <el-table-column prop="complPercent" label="完成百分比"></el-table-column>
+          <el-table-column prop="forecastComplDate" label="预计完成时间"></el-table-column>
         </el-table>
       </div>
       <div class="tabConOther">
@@ -22,12 +22,12 @@
           <el-table-column prop="wallCount" label="播种墙数量" width="100"></el-table-column>
           <el-table-column prop="workstationStatus" label="工作状态" width="100"></el-table-column>
           <el-table-column prop="complC" label="当天已完成订单行总数" width="180"></el-table-column>
-          <el-table-column prop="uncomplC" label="已分配且未完成的订单行数量" width="200"></el-table-column>
-          <el-table-column prop="comingC" label="正在进行订单行数量" width="190"></el-table-column>
-          <el-table-column prop="instantRaion" label="瞬时平均效率（行/人/分钟）"  width="220"></el-table-column>
+          <el-table-column prop="uncomplC" label="已分配且未完成的订单行数量" ></el-table-column>
+          <el-table-column prop="comingC" label="正在进行订单行数量" width="160"></el-table-column>
+          <el-table-column prop="instantRaion" label="瞬时平均效率（行/人/分钟）"></el-table-column>
           <!--新添加字段-->
-          <el-table-column prop="complPercent" label="完成百分比" width="100"></el-table-column>
-          <el-table-column prop="forecastComplDate" label="预计完成时间" width="120"></el-table-column>
+          <el-table-column prop="complPercent" label="完成百分比"></el-table-column>
+          <el-table-column prop="forecastComplDate" label="预计完成时间"></el-table-column>
         </el-table>
         <el-pagination v-if="VOrderListSearch.totalRows>0" class="pagination" background @current-change="VOrderListSearchHandleCurrentChange"
                        :current-page.sync="VOrderListSearch.currentPage" :page-size="VOrderListSearch.pageSize" :page-sizes="[VOrderListSearch.pageSize]" layout="total, sizes, prev, pager, next, jumper"
@@ -44,15 +44,15 @@
 
           <el-table-column prop="uncomplC" label="当天未完成订单行" width="150"></el-table-column>
           <el-table-column prop="comingC" label="正在进行中订单行" width="150"></el-table-column>
-          <el-table-column prop="instantRaion" label="瞬时平均效率（行/人/分钟）" width="220"></el-table-column>
+          <el-table-column prop="instantRaion" label="瞬时平均效率（行/人/分钟）"></el-table-column>
           <!--新添加字段-->
-           <el-table-column prop="complPercent" label="完成百分比" width="100"></el-table-column>
-          <el-table-column prop="forecastComplDate" label="预计完成时间" width="120"></el-table-column>
+           <el-table-column prop="complPercent" label="完成百分比"></el-table-column>
+          <el-table-column prop="forecastComplDate" label="预计完成时间"></el-table-column>
         </el-table>
       </div>
       <div class="tabConOther">
         <h4 class="h2">拣货-S单</h4>
-        <el-table :data='tableData.SOrderList' highlight-current-row v-loading="tableLoading" style="width: 100%" border>
+        <el-table :data='tableData.SOrderList' highlight-current-row v-loading="tableLoading" border>
           <el-table-column prop="entityWorkstationId" label="工作站编号" width="100"></el-table-column>
           <el-table-column prop="wallCount" label="播种墙数量" width="100"></el-table-column>
           <el-table-column prop="workstationStatus" label="工作状态" width="100"></el-table-column>
@@ -60,7 +60,7 @@
 
           <el-table-column prop="uncomplC" label="已分配且未完成的订单行数量"></el-table-column>
           <el-table-column prop="comingC" label="正在进行订单行数量"></el-table-column>
-          <el-table-column prop="instantRaion" label="瞬时平均效率（行/人/分钟）"  width="220"></el-table-column>
+          <el-table-column prop="instantRaion" label="瞬时平均效率（行/人/分钟）"></el-table-column>
           <!--新添加字段-->
           <el-table-column prop="complPercent" label="完成百分比" ></el-table-column>
           <el-table-column prop="forecastComplDate" label="预计完成时间"></el-table-column>
@@ -352,12 +352,53 @@ export default {
     PutawayListSearchHandleCurrentChange (val) {
       this.PutawayListSearch.currentPage = val
       this.getPutaway()
-    }, // 调仓-拣出订单汇总---------------------以下是新增表格的请求与统计图
-    DiaoCangAllList () {}, // 调仓-拣出订单
-    PickOutOrdersList () {}, // 召唤货架汇总
-    ShelvesToalList () {}, //  盘点订单汇总
-    OrderSummaryList () {}, // 新增表格盘点
-    SetPointList () {}, // 切换
+    },
+    // 调仓-拣出订单汇总---------------------以下是新增表格的请求与统计图，下面需要更改接口链接url，与传递的参数，以及把请求到的值渲染到表格中
+    DiaoCangAllList () {
+      let that = this
+      this.axios.get('kanban/orderKanban/selectDmlBinDeliveryWsStatList', {}).then((res) => {
+        console.log(res);
+        //请求到的东西放到tab表格中
+      }).catch( error => {
+        console.log(error);
+      })
+    }, // 调仓-拣出订单
+    PickOutOrdersList () {
+      let that = this
+      this.axios.get('kanban/orderKanban/selectDmlBinDeliveryWsStatList', {}).then((res) => {
+        console.log(res);
+        //请求到的东西放到tab表格中
+      }).catch( error => {
+        console.log(error);
+      })
+    }, // 召唤货架汇总
+    ShelvesToalList () {
+      let that = this
+      this.axios.get('kanban/orderKanban/selectDmlBinDeliveryWsStatList', {}).then((res) => {
+        console.log(res);
+        //请求到的东西放到tab表格中
+      }).catch( error => {
+        console.log(error);
+      })
+    }, //  盘点订单汇总
+    OrderSummaryList () {
+      let that = this
+      this.axios.get('kanban/orderKanban/selectDmlBinDeliveryWsStatList', {}).then((res) => {
+        console.log(res);
+        //请求到的东西放到tab表格中
+      }).catch( error => {
+        console.log(error);
+      })
+    }, // 新增表格盘点
+    SetPointList () {
+      let that = this
+      this.axios.get('kanban/orderKanban/selectDmlBinDeliveryWsStatList', {}).then((res) => {
+        console.log(res);
+        //请求到的东西放到tab表格中
+      }).catch( error => {
+        console.log(error);
+      })
+    }, // 切换
     drawLine () { // 统计图
       let mychart = echarts.init(document.getElementById('myChart'))
       mychart.setOption({
@@ -393,6 +434,18 @@ export default {
           barWidth: 30
         }]
       })
+    },
+    formatDate(date) {
+      let myyear = date.getFullYear()
+      let mymonth = date.getMonth() + 1
+      let myweekday = date.getDate()
+      if (mymonth < 10) {
+        mymonth = '0' + mymonth
+      }
+      if (myweekday < 10) {
+        myweekday = '0' + myweekday
+      }
+      return (myyear + '-' + mymonth + '-' + myweekday)
     }
   }
 }
@@ -459,6 +512,11 @@ export default {
     color: #333333;
     font-family: 'PingFangSC-Semibold', 'PingFang SC Semibold', 'PingFang SC';
   }
+  .el-table th .cell{
+    text-align: center!important;
+    font-size: 15px;
+    color: #000;
+  }
   .el-table th>.cell{
     text-align: center!important;
     font-size: 15px;
@@ -468,7 +526,7 @@ export default {
     font-weight: bolder;
   }
   .el-breadcrumb__item .el-breadcrumb__inner,.el-breadcrumb__separator{
-    font-size: 18px;
+    font-size: 18px!important;
   }
   .el-table__empty-block .el-table__empty-text{
     font-size: 15px;
@@ -477,5 +535,10 @@ export default {
     width: 90%;
     margin: 0 auto;
   }
-
+  .mainOrder tbody .el-table__row td .cell{
+    text-align: center;
+  }
+  .mainOrder .pagination{
+    text-align: right;
+  }
 </style>

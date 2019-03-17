@@ -3,13 +3,13 @@
     <el-row>
         <el-col :span="23" class="main">
             <div class="grid-content bg-purple-dark">
-                <el-tabs v-model="search.orderType" @tab-click="handleTabClick">
+                <el-tabs id="topTitle" v-model="search.orderType" @tab-click="handleTabClick">
                     <el-tab-pane label="订单类型S" name="S"></el-tab-pane>
                     <el-tab-pane label="订单类型V" name="V"></el-tab-pane>
                 </el-tabs>
                 <!-- 搜索区域 -->
-                <el-form :inline="true" class="demo-form-inline">
-                    <el-form-item label="ISP dealer：">
+                <el-form :inline="true" class="demo-form-inline selectedCont clears">
+                    <el-form-item class="fl" label="ISP dealer：">
                         <el-select placeholder="所属平台" v-model="search.ispDealer">
                             <el-option label="全部" value=""></el-option>
                             <el-option label="是" value="Y"></el-option>
@@ -17,14 +17,14 @@
                             <!-- <el-option :label="item.platformName" :key="item.clientType" :value="item.clientType" v-for="item in platformTypeList"></el-option> -->
                         </el-select>
                     </el-form-item>
-                    <el-form-item label="ICT dealer：">
+                    <el-form-item class="fl" label="ICT dealer：">
                         <el-select placeholder="所属平台" v-model="search.ictDealer">
                             <el-option label="全部" value=""></el-option>
                             <el-option label="是" value="Y"></el-option>
                             <el-option label="否" value="N"></el-option>
                         </el-select>
                     </el-form-item>
-                    <el-form-item>
+                    <el-form-item class="fl" id="groupBtn">
                         <el-button type="primary" @click="confirm">确认</el-button>
                         <el-button type="primary" :disabled = "cancelDisabled" @click="cancel">取消</el-button>
                     </el-form-item>
@@ -380,7 +380,47 @@ export default {
 
 
 <style>
-  .drag-item {border:1px solid #ddd ; background: #f9f9f9; padding: 10px; margin-top: 10px; cursor: pointer;}
-  .gray {background: #026780; color: #ffffff;}
+  #topTitle {
+    margin-bottom: 30px;
+  }
+  .selectedCont .el-form-item{
+    margin-right:30px;
+  }
+  .selectedCont{
+    margin-bottom: 30px;
+  }
+  #groupBtn .el-button{
+    width: 85px;
+    height: 40px;
+    letter-spacing: 2px;
+    font-size: 15px;
+    margin-top: -10px;
+    margin-left: 20px;
+  }
+  .drag-item {
+    border:1px solid #ddd ;
+    background: #f9f9f9;
+    padding: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+  }
+  .clears:after{
+    display: block;
+    content: '';
+    clear: both;
+    height: 0;
+    overflow: hidden;
+    visibility:hidden;
+  }
+  .fl{
+    float: left;
+  }
+  .fr{
+    float:right;
+  }
+  .gray {
+    background: #026780;
+    color: #ffffff;
+  }
 </style>
 

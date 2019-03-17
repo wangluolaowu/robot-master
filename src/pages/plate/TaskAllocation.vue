@@ -1,6 +1,6 @@
 <template>
-  <div class="mainCon">
-    <el-row>
+  <div id="mainCon">
+    <el-row class="groupBtn">
       <el-button type="primary" size="medium" @click="cancelBtn">取消</el-button>
       <el-button type="primary" size="medium" @click="deleteBtn">删除</el-button>
       <el-button type="primary" size="medium" @click="addBtn">增加</el-button>
@@ -241,12 +241,20 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-.activated {
-  color: dimgrey;
-}
-
-.tabSelect {
-  margin: 40px 0;
-}
-
+  .activated{
+    color: dimgrey;
+  }
+  .tabSelect{
+    margin: 40px 0;
+  }
+  #mainCon{
+    margin: 40px 0 50px;
+  }
+  #mainCon .groupBtn .el-button{
+    width: 180px;
+    height: 40px;
+    letter-spacing: 2px;
+    font-size: 15px;
+    margin-right: 20px;
+  }
 </style>
