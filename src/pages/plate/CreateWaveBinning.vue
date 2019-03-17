@@ -157,7 +157,7 @@ export default {
       this.isShowInnerConfirmDialog = true
     }, // 全部打回
     confirmReject: function () {
-      this.axios.get('binningManage/binningInfo/deleteDmlPickReviewV', {
+      this.axios.get('binningManage/binningInfo/deleteDmlBinkReviewV', {
         params: {
           orderWaveId: this.id
         }
@@ -246,7 +246,6 @@ export default {
     getTableData () { // 创建波次查询列表
       this.tableLoading = true
       let that = this
-      // this.axios.get('/reloc/createWave/selectDmlPickCreateWaveVList', {
       this.axios.get('binningManage/binningInfo/selectDmlBinCreateWaveInfo', {
         params: that.search
       }).then((res) => {

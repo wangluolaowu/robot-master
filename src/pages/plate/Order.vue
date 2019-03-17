@@ -251,9 +251,10 @@ export default {
   // 页面加
   mounted () {},
   created () {
-    window.setInterval(() => {
-      setTimeout(this.getTimeOut(), 0)
-    }, 60000)
+    // window.setInterval(() => {
+    // setTimeout(this.getTimeOut(), 0)
+    // }, 60000)
+    this.getTimeOut()
   },
   methods: {
     getTimeOut() {
