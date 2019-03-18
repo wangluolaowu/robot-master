@@ -63,7 +63,7 @@
                 </el-input>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="showConfirmDialog">确认打回</el-button>
+                <el-button type="primary" @click="showConfirmDialog">取消</el-button>
                 <el-button type="primary" @click="confirmAssign">任务分配</el-button>
             </el-form-item>
         </el-form>
@@ -98,7 +98,7 @@
         </el-row>
         </el-dialog>
         <el-dialog width="30%" title="提示" :visible.sync="isShowInnerConfirmDialog"  append-to-body>
-            <p class="dialog-text">确认全部打回么？</p>
+            <p class="dialog-text">确认全部取消么？</p>
             <el-button @click="isShowInnerConfirmDialog = false">取 消</el-button>
             <el-button type="primary" @click="confirmReject">确认</el-button>
         </el-dialog>

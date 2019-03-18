@@ -58,17 +58,17 @@
                 <span>{{dialog.systemReason}}</span>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="showConfirmDialog">确认打回</el-button>
+                <el-button type="primary" @click="showConfirmDialog">取消</el-button>
                 <el-button type="primary" @click="confirmAssign">任务分配</el-button>
             </el-form-item>
         </el-form>
         </el-dialog>
         <el-dialog width="30%" title="提示" :visible.sync="isShowInnerConfirmDialog" append-to-body>
-            <p class="dialog-text">确认全部打回么？</p>
+            <p class="dialog-text">确认全部取消么？</p>
             <el-button @click="isShowInnerConfirmDialog = false">取 消</el-button>
             <el-button type="primary" @click="confirmReject">确认</el-button>
         </el-dialog>
-        <el-dialog width="30%" title="已提交完成" :visible.sync="isShowOkDialog" append-to-body>
+        <el-dialog width="30%" title="已提交完成" :visible.sync="isShowOkDialog" append-to-body @close="confirmShowOkDialog">
             <p class="dialog-text">调配任务已完成</p>
             <el-button type="primary" @click="confirmShowOkDialog"> OK</el-button>
         </el-dialog>
@@ -91,7 +91,8 @@ export default {
         orderType: 'S',
         ispDealer: '',
         ictDealer: '',
-        currentPage: 1
+        currentPage: 1,
+        submitAll: false
       },
       cancelDisabled: true,
       submitIsDisabled: true,
@@ -213,7 +214,8 @@ export default {
       this.tableLoading = true
       this.axios.get('binningManage/binningInfo/createDmlBinReviewId', {
         params: {
-          idList: this.sendStr
+          idList: this.sendStr,
+          submitAll: this.search.submitAll
         }
       }).then((res) => {
         if (res.errCode === 'S') {

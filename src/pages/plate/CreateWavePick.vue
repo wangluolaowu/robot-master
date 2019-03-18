@@ -101,6 +101,9 @@
                       <label for="">订单总行数</label><span>{{item.orderListCount}}</span>
                   </li>
                   <li>
+                      <label for="">路线总数</label><span>{{item.routeListCount}}</span>
+                  </li>
+                  <li>
                       <label for="">播种墙</label><span>{{item.forecastWallCount}}</span>
                   </li>
               </ul>
@@ -129,7 +132,7 @@
             <el-button @click="isShowInnerConfirmDialog = false">取 消</el-button>
             <el-button type="primary" @click="confirmReject">确认</el-button>
         </el-dialog>
-        <el-dialog width="30%" title="已提交完成" :visible.sync="isShowOkDialog" append-to-body>
+        <el-dialog width="30%" title="已提交完成" :visible.sync="isShowOkDialog" append-to-body @close='confirmShowOkDialog'>
             <p class="dialog-text">调配任务已完成</p>
             <el-button type="primary" @click="confirmShowOkDialog"> OK</el-button>
         </el-dialog>
@@ -251,7 +254,6 @@ export default {
       dataResult.orderWaveId = this.id
       this.axios.post('reloc/createWave/updateRelocInfoList', qs.stringify(dataResult)).then(res => {
         if (res.errCode === 'S') {
-          console.log(res.data.result)
           this.isShowOkDialog = true // 弹出层 分配成功
         }
       })
@@ -357,12 +359,13 @@ export default {
     endItem (val) {
       this.drag = false
       this.dialogTableData.map((list, i) => {
-        let orderCount = 0  
+        let orderCount = 0
         list.result.map((item, j) => {
           orderCount = Number(item.lineCou) + Number(orderCount)
           return item
         })
         list.orderListCount = Number(orderCount)
+        list.routeListCount = list.result.length
       })
     }
   },

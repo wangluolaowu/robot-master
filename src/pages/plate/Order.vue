@@ -19,7 +19,7 @@
         <h4 class="h2">拣货-V单</h4>
         <el-table :data='tableData.VOrderList' highlight-current-row v-loading="tableLoading" style="width: 100%" border>
           <el-table-column prop="entityWorkstationId" label="工作站编号" width="100"></el-table-column>
-          <el-table-column prop="wallCount" label="播种墙数量" width="100"></el-table-column>
+          <el-table-column prop="forecastWallCount" label="播种墙数量" width="100"></el-table-column>
           <el-table-column prop="workstationStatus" label="工作状态" width="100"></el-table-column>
           <el-table-column prop="complC" label="当天已完成订单行总数" width="180"></el-table-column>
           <el-table-column prop="uncomplC" label="已分配且未完成的订单行数量" ></el-table-column>
@@ -54,7 +54,7 @@
         <h4 class="h2">拣货-S单</h4>
         <el-table :data='tableData.SOrderList' highlight-current-row v-loading="tableLoading" border>
           <el-table-column prop="entityWorkstationId" label="工作站编号" width="100"></el-table-column>
-          <el-table-column prop="wallCount" label="播种墙数量" width="100"></el-table-column>
+          <el-table-column prop="forecastWallCount" label="播种墙数量" width="100"></el-table-column>
           <el-table-column prop="workstationStatus" label="工作状态" width="100"></el-table-column>
           <el-table-column prop="complC" label="当天已完成订单行总数" ></el-table-column>
 
