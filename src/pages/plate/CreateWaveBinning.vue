@@ -207,9 +207,6 @@ export default {
       })
     },
     submit () {
-      if (!this.sendStr) {
-        return false
-      }
       this.submitIsDisabled = true
       this.tableLoading = true
       this.axios.get('binningManage/binningInfo/createDmlBinReviewId', {

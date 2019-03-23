@@ -20,6 +20,7 @@ window.axios = axios
 Vue.use(Element, { size: 'small', zIndex: 3000 })
 Vue.config.productionTip = false
 Vue.use(VueRouter)
+
 const router = new VueRouter({
   routes
 })

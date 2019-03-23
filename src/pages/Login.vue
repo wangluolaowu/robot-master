@@ -1,6 +1,6 @@
 <template>
-  <div id="loginCon">
-    <el-form :model="ruleForm2" :rules="rules2" ref="ruleForm2" label-position="left" label-width="0px" class="demo-ruleForm login-container">
+  <div id="loginCon" v-if="isShowDialog">
+    <el-form  :model="ruleForm2" :rules="rules2" ref="ruleForm2" label-position="left" label-width="0px" class="demo-ruleForm login-container">
       <h2 class="title">DAIMLER Control Tower</h2>
       <el-form-item prop="account">
         <el-input type="text" v-model="ruleForm2.account" auto-complete="off" placeholder="账号"></el-input>
@@ -41,13 +41,27 @@
             // { validator: validaePass2 }
           ]
         },
-        checked: true
+        checked: true,
+        isShowDialog: false
       }
     },
     created () {
-
+      this.checkUserStatus()
     },
     methods: {
+      checkUserStatus () {
+        this.axios.get('/user/status', {
+        }).then((res) => {
+          if (res.errCode === 'S') {
+            sessionStorage.setItem('token', res.data.token)
+            sessionStorage.setItem('user', res.data.user)
+            this.$router.push({ path: '/' })
+          } else {
+            // window.location.href = 'https://bixi-test.cn.isn.corpintra.net/ct/login'
+            this.isShowDialog = true
+          }
+        })
+      },
       handleReset2 () {
         this.$refs.ruleForm2.resetFields()
       },
@@ -72,15 +86,15 @@
             this.axios.get('verify', {
               params: loginParams
             }).then((res) => {
-              console.log(res.code + '====================' + res.message)
               if (res.code === 'S') {
+                sessionStorage.setItem('token', res.token)
+                sessionStorage.setItem('user', this.ruleForm2.account)
                 this.$router.push({ path: '/' })
               }
             })
             // this.$router.push({ path: '/' })
-            // console.log(datas.admin_token,'atas.admin_token')
-            sessionStorage.setItem('token', 'JSON.stringify(datas.admin_token)')
-            sessionStorage.setItem('user', this.ruleForm2.account)
+            // console.log(datas.admin_token,'atas.admin_token')    
+           
             // sessionStorage.setItem('id', datas.id)
           } else {
             console.log('error submit!!')

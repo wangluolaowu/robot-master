@@ -103,12 +103,18 @@ export default {
     handleselect: function (a, b) {},
     // 退出登录
     logout: function () {
-      var _this = this
+      // var _this = this
       this.$confirm('确认退出吗?', '提示', {
         // type: 'warning'
       }).then(() => {
-        sessionStorage.removeItem('user')
-        _this.$router.push('/login')
+        this.axios.get('logout', {}).then((res) => {
+          if (res.errCode === 'S') {
+            sessionStorage.removeItem('token')
+            sessionStorage.removeItem('user')
+            // _this.$router.push('/login')
+            window.location.href = res.data.logOutUrl
+          }
+        })
       })
         .catch(() => {})
     },

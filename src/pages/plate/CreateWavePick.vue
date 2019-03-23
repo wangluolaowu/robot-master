@@ -180,7 +180,7 @@ export default {
       updateOk: false,
       deleteOk: false,
       scope: [],
-      sendStr: ''
+      sendStr: []
     }
   },
   created: function () {
@@ -190,9 +190,9 @@ export default {
     handleSelectionChange (val) {
       let arr = []
       val.map(item => {
-        arr.push(item.orderHeaderId)
+        arr.push(item)
       })
-      this.sendStr = arr.join(',')
+      this.sendStr = arr
       if (arr.length > 0 || this.submitAll) {
         this.submitIsDisabled = false
         this.cancelDisabled = false
@@ -281,15 +281,13 @@ export default {
       })
     },
     submit () {
-      // if (!this.sendStr) {
-      // return false
-      // }
       this.submitIsDisabled = true
       this.tableLoading = true
       let dataResult = {}
       dataResult.idList = this.sendStr
       dataResult.submitAll = this.search.submitAll
       dataResult.orderType = this.search.orderType
+      dataResult.result = JSON.stringify(this.sendStr)
       this.axios.post('reloc/createWave/createWaveId', qs.stringify(dataResult)).then((res) => {
         if (res.errCode === 'S') {
           this.id = res.data.result

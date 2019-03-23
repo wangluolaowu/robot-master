@@ -24,6 +24,12 @@ const routes = [
     hidden: true
   },
   {
+    path: '/loginSSO',
+    component: Login,
+    name: '登录',
+    hidden: true
+  },
+  {
     path: '/404',
     component: NotFound,
     name: '页面未找到',
@@ -161,6 +167,29 @@ const routes = [
         path: '/reloc_out/history',
         component: () => import('@/pages/plate/stock/CreatWaveMRecordStock'),
         name: '波次历史记录'
+      }
+    ]
+  },
+  {
+    path: '/',
+    component: Layout,
+    name: '用户管理',
+    icon: 'el-icon-service',
+    children: [
+      {
+        path: '/custom/menu',
+        component: () => import('@/pages/plate/custom/CtMenuManage'),
+        name: '菜单管理'
+      },
+      {
+        path: '/custom/user',
+        component: () => import('@/pages/plate/custom/CtUserManage'),
+        name: '用户管理'
+      },
+      {
+        path: '/custom/role',
+        component: () => import('@/pages/plate/custom/CtRoleManage'),
+        name: '角色管理'
       }
     ]
   }

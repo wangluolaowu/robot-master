@@ -4,8 +4,8 @@ let axiosInstance = axios.create({
   // baseURL: 'http://172.16.10.201:8080/',
   // baseURL: 'http://123.126.3.190:12212/',
   // baseURL: 'http://localhost:8090/api/',
-  //baseURL: 'http://localhost:8080/',
-   baseURL: 'https://bixi-test.cn.isn.corpintra.net/ct',
+  baseURL: 'http://localhost:8080/',
+  // baseURL: 'https://bixi-test.cn.isn.corpintra.net/ct',
   headers: {
     // 'X-Requested-With': 'XMLHttpRequest',
     'Content-Type': 'application/json;charset=utf-8',
@@ -19,6 +19,15 @@ let axiosInstance = axios.create({
     'Pragma': 'no-cache'
   }
 })
+axiosInstance.interceptors.request.use(config => {
+  let token = sessionStorage.getItem('token')
+  if (token && token !== '') {
+    config.headers.Authorization = token
+  }
+  return config
+}, err => {
+  return Promise.reject(err.res.data.errorDefaultMessage || err.res.data.errorMessage)
+})
 
 axiosInstance.interceptors.response.use(res => {
 /* 在此处理请求返回内容 */
@@ -29,29 +38,22 @@ axiosInstance.interceptors.response.use(res => {
   // if (!res.data.success) {
   //   return Promise.reject(res.data.errorMessage)
   // }
+  let token = res.headers['Authorization']
+  if (token && token !== '') {
+    sessionStorage.setItem('token', token)
+  }
   return res.data
 }, err => {
   return Promise.reject(err.res.data.errorDefaultMessage || err.res.data.errorMessage)
 })
 export default {
-  postD (url, data = {}) {
-    return axiosInstance({
-      method: 'post',
-      url,
-      data,
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded; multipart/form-data;application/json;charset=UTF-8'
-      },
-      responseType: 'blob'
-    })
-  },
   post (url, data = {}) {
     return axiosInstance({
       method: 'post',
       url,
       data,
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded; multipart/form-data;application/json;charset=UTF-8'
+        'Content-Type': 'application/x-www-form-urlencoded; application/json;charset=UTF-8'
       }
     })
   },
