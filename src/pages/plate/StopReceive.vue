@@ -2,12 +2,13 @@
      <el-form :inline="true" class="demo-form-inline">
        <el-form-item label="工作站编号：">
          <el-select v-model="search.entityWorkstationId" @change="getReceiveStatus" v-loading.fullscreen.lock="fullscreenLoading">
-                <el-option label="1" value="1"></el-option>
-                <el-option label="2" value="2"></el-option>
-                <el-option label="3" value="3"></el-option>
-                <el-option label="4" value="4"></el-option>
-                <el-option label="5" value="5"></el-option>
-                <el-option label="6" value="6"></el-option>
+                <el-option
+                v-for="item in WS_ENTITY_WORKSTATION"
+                :key="item.value"
+                :label="item.lable"
+                :value="item.value" 
+                > 
+              </el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="工作类型：">
@@ -35,14 +36,30 @@
         search: {
           entityWorkstationId: '1',
           extWorkstationType: 'S',
-          activeType: ''
-        }
+          activeType: '',
+          workstationType: 2
+        },
+        WS_ENTITY_WORKSTATION: []
       }
     },
     mounted () {
       this.getReceiveStatus()
+      this.getSelectValues()
     },
     methods: {
+      getSelectValues() {
+        this.axios.get('pickManage/pickInfo/selectWsEntityWorkstation', {
+          params: this.search
+        }).then((res) => {
+          if (res.errCode === 'S') {
+            this.WS_ENTITY_WORKSTATION = res.data.result.map(item => {
+              item.value = item.entityWorkstationId
+              item.lable = item.entityWorkstationId
+              return item
+            })
+          }
+        })
+      },
       restReceive (status) {
         let that = this
         this.search.activeType = status
