@@ -4,7 +4,7 @@
          <el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
              <el-form :inline="true" :model="filters">
                 <el-form-item>
-                    <el-input v-model="filters.name" placeholder="姓名"></el-input>
+                    <el-input v-model="filters.username" placeholder="姓名"></el-input>
                    </el-form-item>
                    <el-form-item>
                      <el-button type="primary" v-on:click="getUsers">查询</el-button>
@@ -16,12 +16,20 @@
        </el-col>
 
 
-         <el-table :data="userInfoList" style="width: 100%">
-              <el-table-column prop="cId" label="id" width="180">
+         <el-table :data="userInfoList" style="width: 100%" border>
+            <!--<el-table-column prop="id" label="id" >
+            </el-table-column>-->
+            <el-table-column prop="firstName" label="FirstName" width="180">
             </el-table-column>
-            <el-table-column prop="cUsername" label="名字" width="180">
+             <el-table-column prop="lastName" label="LastName" width="180">
             </el-table-column>
-             <el-table-column prop="cPwd" label="密码" width="180">
+             <el-table-column prop="username" label="登录名" width="180">
+            </el-table-column>
+             <el-table-column prop="password" label="密码" width="180">
+            </el-table-column>
+             <el-table-column prop="email" label="Email" width="180">
+            </el-table-column>
+            <el-table-column prop="state" label="状态">
             </el-table-column>
              <!--第二步  开始进行修改和查询操作-->
              <el-table-column label="操作" align="center" min-width="100">
@@ -30,27 +38,37 @@
  
                      <el-button type="text" @click="checkDetail(scope.row)">查看详情</el-button>
  
-                     <el-button type="info" @click="modifyUser(scope.row)">修改</el-button>
+                     <el-button type="text" @click="modifyUser(scope.row)">修改</el-button>
   
-                     <el-button type="info" @click="deleteUser(scope.row)">删除</el-button>
+                     <el-button type="text" @click="deleteUser(scope.row)">删除</el-button>
                   </template>
              </el-table-column>
              <!--编辑与增加的页面-->
-
-
          </el-table>
           <!--新增界面-->
          <el-dialog title="记录" :visible.sync="dialogVisible" width="50%" :close-on-click-modal="false">
              <el-form :model="addFormData" :rules="rules2" ref="addFormData" label-width="0px" class="demo-ruleForm login-container">
-                  <el-form-item prop="cUsername">
-                    <el-input type="text" v-model="addFormData.cUsername" auto-complete="off" placeholder="账号"></el-input>
+                  <el-form-item prop="firstName">
+                    <el-input type="text" v-model="addFormData.firstName" auto-complete="off" placeholder="FirstName"></el-input>
                   </el-form-item>
-                <el-form-item prop="cPwd">
-                     <el-input type="password" v-model="addFormData.cPwd" auto-complete="off" placeholder="密码"></el-input>
+                   <el-form-item prop="lastName">
+                    <el-input type="text" v-model="addFormData.lastName" auto-complete="off" placeholder="LastName"></el-input>
+                  </el-form-item>
+                   <el-form-item prop="username">
+                    <el-input type="text" v-model="addFormData.username" auto-complete="off" placeholder="登录名"></el-input>
+                  </el-form-item>
+                   <el-form-item prop="password">
+                    <el-input type="password" v-model="addFormData.password" auto-complete="off" placeholder="密码"></el-input>
+                  </el-form-item>
+                   <el-form-item prop="email">
+                    <el-input type="text" v-model="addFormData.email" auto-complete="off" placeholder="Email"></el-input>
+                  </el-form-item>
+                <el-form-item prop="state">
+                     <el-input type="text" v-model="addFormData.state" auto-complete="off" placeholder="状态"></el-input>
                   </el-form-item>
              </el-form>
              <span slot="footer" class="dialog-footer">
-                 <el-button @click.native="dialogVisible = false,addFormData={cId:'',cUsername:'',cPwd:''}">取 消</el-button>
+                 <el-button @click.native="dialogVisible = false,addFormData={id:'',firstName:'',lastName:'',username:'',password:'',email:'',state:''}">取 消</el-button>
                  <el-button v-if="isView" type="primary" @click.native="addSubmit">确 定</el-button>
              </span>
           </el-dialog>
@@ -58,8 +76,7 @@
   </template>
   
   <script>
-    // import {userList} from '../api/api'
-    import axios from 'axios'
+    import axios from '../../../util/http'
     import qs from 'qs'
     export default {
       name: 'home',
@@ -70,17 +87,21 @@
           dialogVisible: false,
           isView: true,
           addFormData: {
-            cId: '',
-            cUsername: '',
-            cPwd: ''
+            id: '',
+            firstName: '',
+            lastName: '',
+            username: '',
+            password: '',
+            email: '',
+            state: ''
           },
           rules2: {
-            cUsername: [{
+            username: [{
               required: true,
               message: '用户名不能为空',
               trigger: 'blur'
             }],
-            cPwd: [{
+            password: [{
               required: true,
               message: '密码不能为空',
               trigger: 'blur'
@@ -97,8 +118,8 @@
       methods: {
         loadData() {
           let param = {filter: this.filters.name}
-          axios.post('/user/userlist', qs.stringify(param)).then((result) => {
-            var _data = result.data
+          axios.post('/custom/ctUser/selectCtUserList', qs.stringify(param)).then((res) => {
+            var _data = res.data.result
             this.userInfoList = _data
           })
         },
@@ -107,9 +128,13 @@
         },
         addUser() {
           this.addFormData = {
-            cId: '',
-            cUsername: '',
-            cPwd: ''
+            id: '',
+            firstName: '',
+            lastName: '',
+            username: '',
+            password: '',
+            email: '',
+            state: ''
           }
           this.isView = true
           this.dialogVisible = true
@@ -132,11 +157,11 @@
             confirmButtonText: '确定',
             callback: action => {
               var params = {
-                userId: rowData.cId
+                ctUserId: rowData.id
               }
-              axios.post('/user/delete', qs.stringify(params)).then((result) => {
-                console.info(result)
-                if (result.data.success) {
+              axios.post('/custom/ctUser/deleteCtUser', qs.stringify(params)).then((res) => {
+                console.info(res)
+                if (res.errCode === 'S') {
                   this.$message({
                     type: 'info',
                     message: `已删除`
@@ -158,21 +183,41 @@
             // 代表通过验证 ,将参数传回后台
             if (valid) {
               let param = Object.assign({}, this.addFormData)
-              axios.post('/user/submit', qs.stringify(param)).then((result) => {
-                if (result.data.success) {
-                  this.$message({
-                    type: 'info',
-                    message: '添加成功'
-                  })
-                  this.loadData()
-                } else {
-                  this.$message({
-                    type: 'info',
-                    message: '添加失败'
-                  })
-                }
-                this.dialogVisible = false
-              })
+              let result = {}
+              result.result = JSON.stringify(param)
+              if (param.id) {
+                axios.post('/custom/ctUser/updateCtUser', qs.stringify(result)).then((res) => {
+                  if (res.errCode === 'S') {
+                    this.$message({
+                      type: 'info',
+                      message: '修改成功'
+                    })
+                    this.loadData()
+                  } else {
+                    this.$message({
+                      type: 'info',
+                      message: '修改失败'
+                    })
+                  }
+                  this.dialogVisible = false
+                })
+              } else {
+                axios.post('/custom/ctUser/insertCtUser', qs.stringify(result)).then((res) => {
+                  if (res.errCode === 'S') {
+                    this.$message({
+                      type: 'info',
+                      message: '添加成功'
+                    })
+                    this.loadData()
+                  } else {
+                    this.$message({
+                      type: 'info',
+                      message: '添加失败'
+                    })
+                  }
+                  this.dialogVisible = false
+                })
+              }
             }
           })
         }

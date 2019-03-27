@@ -84,7 +84,6 @@
   </div>
 </template>
 <script>
-  import {formatDate} from '../../util/date.js' // 注意路径
   import axios from '../../util/http'
   import echarts from 'echarts'
   export default {

@@ -5,13 +5,35 @@
       <el-table :data='tableData.list' highlight-current-row v-loading="tableLoading" style="width: 100%" border>
         <el-table-column prop="kidId" label="机器人编码">
         </el-table-column>
-        <el-table-column prop="batteryFaultCode" label="错误类型">
+        <el-table-column prop="batteryFaultCode" label="错误类型" width="200">
+           <template slot-scope="scope" width="100%">
+              <el-select placeholder="错误类型" v-model="scope.row.batteryFaultCode" :disabled="true">
+              <el-option
+                v-for="item in KID_BATTERY_FAULT_CODE"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value" 
+              > 
+              </el-option>
+            </el-select>
+            </template>
         </el-table-column>
         <el-table-column prop="posX" label="X轴位置">
         </el-table-column>
         <el-table-column prop="posY" label="Y轴位置">
         </el-table-column>
-        <el-table-column prop="kidStatus" label="状态">
+        <el-table-column prop="kidStatus" label="状态" width="200">
+           <template slot-scope="scope" width="100%">
+              <el-select placeholder="状态" v-model="scope.row.kidStatus" :disabled="true">
+              <el-option
+                v-for="item in KM_KID_STATUS"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value" 
+              > 
+              </el-option>
+            </el-select>
+            </template>
         </el-table-column>
         <el-table-column prop="kidTaskId" label="任务编码">
         </el-table-column>
@@ -19,7 +41,10 @@
         </el-table-column>
         <el-table-column prop="batteryPower" label="电量（%）">
         </el-table-column>
-        <el-table-column prop="lastUpdateDate" label="最后更新日期" width="130">
+        <el-table-column prop="lastUpdateDate" label="最后更新日期" width="200">
+          <template slot-scope="scope">
+                {{getDate(scope.row.lastUpdateDate,true)}}
+            </template>
         </el-table-column>
       </el-table>
       <el-pagination v-if="listSearch.totalRows>0" class="pagination" background @current-change="listSearchHandleCurrentChange"
@@ -34,9 +59,31 @@
         </el-table-column>
         <el-table-column prop="taskId" label="任务编码" width="100">
         </el-table-column>
-        <el-table-column prop="tasktType" label="任务类型" width="100">
+        <el-table-column prop="tasktType" label="任务类型" width="200">
+          <template slot-scope="scope" width="100%">
+              <el-select placeholder="任务类型" v-model="scope.row.tasktType" :disabled="true">
+              <el-option
+                v-for="item in KM_KID_TASK_TYPE"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value" 
+              > 
+              </el-option>
+            </el-select>
+            </template>
         </el-table-column>
-        <el-table-column prop="taskStatus" label="任务状态" width="100">
+        <el-table-column prop="taskStatus" label="任务状态" width="200">
+          <template slot-scope="scope" width="100%">
+              <el-select placeholder="任务状态" v-model="scope.row.taskStatus" :disabled="true">
+              <el-option
+                v-for="item in KM_KID_TASK_STATUS"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value" 
+              > 
+              </el-option>
+            </el-select>
+            </template>
         </el-table-column>
         <el-table-column prop="srcPosX" label="初始位置X" width="100">
         </el-table-column>
@@ -54,9 +101,15 @@
         </el-table-column>
         <el-table-column prop="wsId" label="工作站编码" width="100">
         </el-table-column>
-        <el-table-column prop="creationDate" label="创建日期" width="130">
+        <el-table-column prop="creationDate" label="创建日期" width="200">
+           <template slot-scope="scope">
+                {{getDate(scope.row.creationDate,true)}}
+            </template>
         </el-table-column>
-        <el-table-column prop="lastUpdateDate" label="最后更新日期" width="130">
+        <el-table-column prop="lastUpdateDate" label="最后更新日期" width="200">
+           <template slot-scope="scope">
+                {{getDate(scope.row.lastUpdateDate,true)}}
+            </template>
         </el-table-column>
       </el-table>
       <el-pagination v-if="list1Search.totalRows>0" class="pagination" background @current-change="list1SearchHandleCurrentChange"
@@ -71,9 +124,31 @@
         </el-table-column>
         <el-table-column prop="taskId" label="任务编码" width="85">
         </el-table-column>
-        <el-table-column prop="taskType" label="任务类型" width="85">
+        <el-table-column prop="taskType" label="任务类型" width="200">
+           <template slot-scope="scope" width="100%">
+              <el-select placeholder="任务类型" v-model="scope.row.tasktType" :disabled="true">
+              <el-option
+                v-for="item in KM_KID_TASK_TYPE"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value" 
+              > 
+              </el-option>
+            </el-select>
+            </template>
         </el-table-column>
-        <el-table-column prop="taskStatus" label="任务状态" width="85">
+        <el-table-column prop="taskStatus" label="任务状态" width="200">
+          <template slot-scope="scope" width="100%">
+              <el-select placeholder="任务状态" v-model="scope.row.taskStatus" :disabled="true">
+              <el-option
+                v-for="item in KM_KID_TASK_STATUS"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value" 
+              > 
+              </el-option>
+            </el-select>
+            </template>
         </el-table-column>
         <el-table-column prop="srcPosX" label="初始位置X" width="100">
         </el-table-column>
@@ -95,15 +170,32 @@
         </el-table-column>
         <el-table-column prop="objectId" label="货架编码" width="100">
         </el-table-column>
-        <el-table-column prop="releaseLoadFlag" label="是否举升" width="100">
+        <el-table-column prop="releaseLoadFlag" label="是否举升" width="200">
+          <template slot-scope="scope" width="100%">
+              <el-select placeholder="任务状态" v-model="scope.row.releaseLoadFlag" :disabled="true">
+              <el-option
+                v-for="item in TM_MOVE_TASK_RELEASE_LOAD"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value" 
+              > 
+              </el-option>
+            </el-select>
+            </template>
         </el-table-column>
         <el-table-column prop="chargePointId" label="充电桩编码" width="100">
         </el-table-column>
         <el-table-column prop="wsId" label="工作站编码" width="100">
         </el-table-column>
-        <el-table-column prop="creationDate" label="创建日期" width="100">
+        <el-table-column prop="creationDate" label="创建日期" width="200">
+           <template slot-scope="scope">
+                {{getDate(scope.row.creationDate,true)}}
+            </template>
         </el-table-column>
-        <el-table-column prop="lastUpdateDate" label="最后更新日期" width="150">
+        <el-table-column prop="lastUpdateDate" label="最后更新日期" width="200">
+           <template slot-scope="scope">
+                {{getDate(scope.row.lastUpdateDate,true)}}
+            </template>
         </el-table-column>
       </el-table>
       <el-pagination v-if="list2Search.totalRows>0" class="pagination" background @current-change="list2SearchHandleCurrentChange"
@@ -115,11 +207,19 @@
 </template>
 <script>
 import axios from '../../util/http'
+import dateFormat from '../../util/date'
+import EnumSelect from '../../util/enum'
 export default {
   data () {
     return {
       axios,
+      dateFormat,
       tableLoading: false,
+      KID_BATTERY_FAULT_CODE: [],
+      KM_KID_STATUS: [],
+      KM_KID_TASK_TYPE: [],
+      KM_KID_TASK_STATUS: [],
+      TM_MOVE_TASK_RELEASE_LOAD: [],
       tableData: {
         list: [],
         list1: [],
@@ -147,8 +247,20 @@ export default {
     this.getPostOne()
     this.getPostTwo()
     this.getPostThree()
+    this.getSelectValues()
   },
   methods: {
+    getDate(data, flag) {
+      return this.dateFormat(data, flag)
+    },
+    getSelectValues() {
+      let Enum = EnumSelect()
+      this.KID_BATTERY_FAULT_CODE = Enum.KID_BATTERY_FAULT_CODE
+      this.KM_KID_STATUS = Enum.KM_KID_STATUS
+      this.KM_KID_TASK_TYPE = Enum.KM_KID_TASK_TYPE
+      this.KM_KID_TASK_STATUS = Enum.KM_KID_TASK_STATUS
+      this.TM_MOVE_TASK_RELEASE_LOAD = Enum.TM_MOVE_TASK_RELEASE_LOAD
+    },
     getPostOne () {
       let that = this
       this.axios.get('kanban/kidInfoV/selectKidInfoVList', {

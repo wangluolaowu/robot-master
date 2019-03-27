@@ -1,23 +1,17 @@
-export function formatDate (date, fmt) {
-  if (/(y+)/.test(fmt)) {
-    fmt = fmt.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length))
-  }
-  let o = {
-    'M+': date.getMonth() + 1,
-    'd+': date.getDate(),
-    'h+': date.getHours(),
-    'm+': date.getMinutes(),
-    's+': date.getSeconds()
-  }
-  for (let k in o) {
-    if (new RegExp(`(${k})`).test(fmt)) {
-      let str = o[k] + ''
-      fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? str : padLeftZero(str))
-    }
-  }
-  return fmt
+function dateFormat (time, flag) {
+  let date = new Date(time)
+  let y = date.getFullYear()
+  let m = date.getMonth() + 1
+  m = m < 10 ? ('0' + m) : m
+  let d = date.getDate()
+  d = d < 10 ? ('0' + d) : d
+  let h = date.getHours()
+  h = h < 10 ? ('0' + h) : h
+  let minute = date.getMinutes()
+  let second = date.getSeconds()
+  minute = minute < 10 ? ('0' + minute) : minute
+  second = second < 10 ? ('0' + second) : second
+  let str = flag ? `${y}-${m}-${d}  ${h}:${minute}:${second}` : `${m}月${d}日  ${h}:${minute} `
+  return str
 }
-
-function padLeftZero (str) {
-  return ('00' + str).substr(str.length)
-}
+export default dateFormat
