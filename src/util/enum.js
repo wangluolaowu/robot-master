@@ -199,4 +199,5 @@ function EnumSelect() {
   return EnumObj
 }
 
+// 获取枚举值
 export default EnumSelect

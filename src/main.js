@@ -21,6 +21,23 @@ Vue.use(Element, { size: 'small', zIndex: 3000 })
 Vue.config.productionTip = false
 Vue.use(VueRouter)
 
+Vue.prototype.getEnumSelectValues = function () {
+  this.axios.get('common/enum/selectEnumList', {
+    params: 'test'
+  }).then((res) => {
+    if (res.errCode === 'S') {
+      res.data.result.map(item => {
+        if (item.lookupType === 'MD_MAP_DIRECTION_LIMIT') {
+          item.value = item.lookupValueNum
+          item.label = item.lookupValueCode
+          this.MD_MAP_DIRECTION_LIMIT.push(item)
+        }
+        return item
+      })
+    }
+  })
+}
+
 const router = new VueRouter({
   routes
 })
