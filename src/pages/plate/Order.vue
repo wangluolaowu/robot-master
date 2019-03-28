@@ -115,11 +115,11 @@
         <el-table :data='tableData.PutawayAllList' highlight-current-row v-loading="tableLoadingSJT" style="width: 100%" border>
           <el-table-column prop="inC" label="系统当天接收订单行数量" width="200"></el-table-column>
           <el-table-column prop="whiteWaveC" label="当天已创建波次订单行" width="180"></el-table-column>
-          <el-table-column prop="blueWaveC" label="蓝领已提交次订单行数量" width="190"></el-table-column>
+          <el-table-column prop="blueWaveC" label="蓝领已提交订单行数量" width="190"></el-table-column>
           <el-table-column prop="blueUncomplC" label="蓝领已提交未完成订单行" width="190"></el-table-column>
-          <el-table-column prop="uncomplC" label="未完成订单数量" width="130"></el-table-column>
+          <el-table-column prop="uncomplC" label="当前未完成订单数量" width="130"></el-table-column>
           <el-table-column prop="comingC" label="正在进行订单数量" width="145"></el-table-column>
-          <el-table-column prop="complC" label="已完成订单数量" width="130"></el-table-column>
+          <el-table-column prop="complC" label="当天已完成订单数量" width="130"></el-table-column>
           <el-table-column prop="instantRaion" label="瞬时平均效率（行/人/分钟）"  width="220"></el-table-column>
           <!--新添加字段-->
           <el-table-column prop="complPercent" label="完成百分比" width="100"></el-table-column>
@@ -149,8 +149,8 @@
           </el-table-column>
           <el-table-column prop="complC" label="当天已完成订单行总数" width="175"></el-table-column>
           <el-table-column prop="dayWaveC" label="当天已提交订单行总数" width="175"></el-table-column>
-          <el-table-column prop="currWaveC" label="本次已提交订单行总数" width="175"></el-table-column>
-          <el-table-column prop="whiteUncomplC" label="已提交且未完成的订单行数量" width="220"></el-table-column>
+          <el-table-column prop="currWaveC" label="蓝领本次已提交订单行总数" width="175"></el-table-column>
+          <el-table-column prop="whiteUncomplC" label="蓝领已提交且未完成的订单行数量" width="220"></el-table-column>
           <el-table-column prop="comingC" label="正在进行订单行数量" width="160"></el-table-column>
           <el-table-column prop="instantRaion" label="瞬时平均效率（行/人/分钟）" width="220"></el-table-column>
           <!--新添加字段-->
@@ -426,7 +426,7 @@ export default {
   created () {
     // window.setInterval(() => {
     // setTimeout(this.getTimeOut(), 0)
-    // }, 60000)   
+    // }, 60000)
   },
   methods: {
     getDate(data, flag) {

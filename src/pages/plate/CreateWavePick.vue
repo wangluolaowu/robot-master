@@ -39,33 +39,55 @@
                 <el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" style="width: 100%" border @selection-change="handleSelectionChange" v-loading="tableLoading">
                     <el-table-column type="selection" width="55">
                     </el-table-column>
-                    <el-table-column prop="dealerAccount" label="客户编码">
+                    <el-table-column prop="dealerAccount" label="客户编码" width="100">
                     </el-table-column>
-                    <el-table-column prop="custName" label="客户名称">
+                    <el-table-column prop="custName" label="客户名称" width="200">
                     </el-table-column>
-                    <el-table-column prop="wip" label="WIP号">
+                    <el-table-column prop="wip" label="WIP号" width="100">
                     </el-table-column>
                     <el-table-column prop="wipLine" label="WIP订单行" width="100">
                     </el-table-column>
-                    <el-table-column prop="pickTicketNum" label="备货标签">
+                    <el-table-column prop="pickTicketNum" label="备货标签" width="200">
                     </el-table-column>
-                    <el-table-column prop="route" label="路线">
+                    <el-table-column prop="route" label="路线" width="100">
                     </el-table-column>
-                     <el-table-column prop="subRoute" label="子路线">
+                     <el-table-column prop="subRoute" label="子路线" width="100">
                     </el-table-column>
-                    <el-table-column prop="orderType" label="订单类型">
+                    <el-table-column prop="orderType" label="订单类型" width="100">
                     </el-table-column>
-                    <el-table-column prop="locNum" label="货架位">
+                    <el-table-column prop="locNum" label="货架位" width="100">
                     </el-table-column>
-                    <el-table-column prop="skuNum" label="零件号码">
+                    <el-table-column prop="skuNum" label="零件号码" width="200">
                     </el-table-column>
-                    <el-table-column prop="skuName" label="零件描述">
+                    <el-table-column prop="skuName" label="零件描述" width="200">
                     </el-table-column>
-                    <el-table-column prop="qty" label="数量">
+                    <el-table-column prop="qty" label="数量" width="100">
                     </el-table-column>
-                    <el-table-column  prop="ispDealer"  label="ISP经销商">
+                    <el-table-column  prop="ispDealer"  label="ISP经销商" width="200">
+                      <template slot-scope="scope" width="100%">
+                        <el-select placeholder="工作状态" v-model="scope.row.ispDealer" :disabled="true">
+                        <el-option
+                          v-for="item in Y_N_STATUS"
+                          :key="item.value"
+                          :label="item.label"
+                          :value="item.value" 
+                        > 
+                       </el-option>
+                       </el-select>
+                    </template>
                     </el-table-column>
-                    <el-table-column prop="ictDealer" label="ICT经销商">
+                    <el-table-column prop="ictDealer" label="ICT经销商" width="200">
+                       <template slot-scope="scope" width="100%">
+                        <el-select placeholder="工作状态" v-model="scope.row.ictDealer" :disabled="true">
+                        <el-option
+                          v-for="item in Y_N_STATUS"
+                          :key="item.value"
+                          :label="item.label"
+                          :value="item.value" 
+                        > 
+                       </el-option>
+                       </el-select>
+                    </template>
                     </el-table-column>
                 </el-table>
                 <el-pagination v-if="totalRows>0" class="pagination" background @current-change="handleCurrentChange" :current-page.sync="search.currentPage" :page-size="pageSize" :page-sizes="[pageSize]" layout="total, sizes, prev, pager, next, jumper" :total="totalRows">
@@ -145,11 +167,12 @@
 import axios from '../../util/http'
 import draggable from 'vuedraggable'
 import qs from 'qs'
-
+import EnumSelect from '../../util/enum'
 export default {
   data () {
     return {
       axios,
+      EnumSelect,
       draggable,
       drag: false,
       search: { // 查询参数
@@ -180,13 +203,19 @@ export default {
       updateOk: false,
       deleteOk: false,
       scope: [],
-      sendStr: []
+      sendStr: [],
+      Y_N_STATUS: []
     }
   },
   created: function () {
     this.getTableData()
+    this.getSelectValues()
   },
   methods: {
+    getSelectValues() {
+      let Enum = EnumSelect()
+      this.Y_N_STATUS = Enum.Y_N_STATUS
+    },
     handleSelectionChange (val) {
       let arr = []
       val.map(item => {
@@ -288,6 +317,7 @@ export default {
       dataResult.submitAll = this.search.submitAll
       dataResult.orderType = this.search.orderType
       dataResult.result = JSON.stringify(this.sendStr)
+      dataResult.search = JSON.stringify(this.search)
       this.axios.post('reloc/createWave/createWaveId', qs.stringify(dataResult)).then((res) => {
         if (res.errCode === 'S') {
           this.id = res.data.result

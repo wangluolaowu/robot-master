@@ -307,6 +307,7 @@ export default {
       dataResult.submitAll = this.search.submitAll
       dataResult.orderType = this.search.orderType
       dataResult.idList = ''
+      dataResult.search = JSON.stringify(this.search)
       this.axios.post('reloc/createWave/createWaveId', qs.stringify(dataResult)).then((res) => {
         if (res.errCode === 'S') {
           this.id = res.data.result

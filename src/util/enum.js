@@ -21,6 +21,16 @@ function EnumSelect() {
         value: '0'
       }
     ],
+    Y_N_STATUS: [
+      {
+        label: '是',
+        value: 'Y'
+      },
+      {
+        label: '否',
+        value: 'N'
+      }
+    ],
     WS_STATUS: [
       {
         label: 'INACTIVE',

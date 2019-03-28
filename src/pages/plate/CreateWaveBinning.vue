@@ -20,13 +20,13 @@
                 <el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" style="width: 100%" border @selection-change="handleSelectionChange" v-loading="tableLoading">
                     <el-table-column type="selection" width="55">
                     </el-table-column>
-                    <el-table-column prop="binGrn" label="GRN">
+                    <el-table-column prop="binGrn" label="GRN" width="150">
                     </el-table-column>
-                    <el-table-column prop="skuNum" label="零件编码">
+                    <el-table-column prop="skuNum" label="零件编码" width="150">
                     </el-table-column>
-                    <el-table-column prop="binPartDesc" label="零件描述">
+                    <el-table-column prop="binPartDesc" label="零件描述" width="200">
                     </el-table-column>
-                    <el-table-column prop="binWip" label="WIP号">
+                    <el-table-column prop="binWip" label="WIP号" width="100">
                     </el-table-column>
                     <el-table-column prop="binWipLine" label="WIP订单行" width="100">
                     </el-table-column>
@@ -38,11 +38,17 @@
                     </el-table-column>
                     <el-table-column prop="locNum" label="货架位">
                     </el-table-column>
-                    <el-table-column prop="binTicketNum" label="上货标签号">
+                    <el-table-column prop="binTicketNum" label="上货标签号" width="200">
                     </el-table-column>
-                    <el-table-column prop="" label="上货标签打印时间">
+                    <el-table-column prop="creationDate" label="上货标签打印时间" width="200">
+                       <template slot-scope="scope">
+                            {{getDate(scope.row.creationDate,true)}}
+                      </template>
                     </el-table-column>
-                    <el-table-column prop="creationDate" label="导入时间">
+                    <el-table-column prop="creationDate" label="导入时间" width="200">
+                       <template slot-scope="scope">
+                            {{getDate(scope.row.creationDate,true)}}
+                      </template>
                     </el-table-column>
                 </el-table>
                 <el-pagination v-if="totalRows>0" class="pagination" background @current-change="handleCurrentChange" :current-page.sync="search.currentPage" :page-size="pageSize" :page-sizes="[pageSize]" layout="total, sizes, prev, pager, next, jumper" :total="totalRows">
@@ -80,11 +86,12 @@
 // 接口数据
 import axios from '../../util/http'
 import draggable from 'vuedraggable'
-
+import dateFormat from '../../util/date'
 export default {
   data () {
     return {
       axios,
+      dateFormat,
       draggable,
       drag: false,
       search: { // 查询参数
@@ -121,6 +128,9 @@ export default {
     this.getTableData()
   },
   methods: {
+    getDate(data, flag) {
+      return this.dateFormat(data, flag)
+    },
     handleSelectionChange (val) {
       let arr = []
       val.map(item => {
