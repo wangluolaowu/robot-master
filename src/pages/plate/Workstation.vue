@@ -8,7 +8,7 @@
       </el-table-column>
       <el-table-column prop="userNum" v-model="isShow" label="是否在线">
       </el-table-column>
-      <el-table-column prop="workstationStatus" label="工位状态">
+      <el-table-column prop="workstationStatus" label="工位状态" width="200">
         <template slot-scope="scope" width="100%">
               <el-select placeholder="工作状态" v-model="scope.row.workstationStatus" :disabled="false">
               <el-option
@@ -21,7 +21,7 @@
             </el-select>
          </template>
       </el-table-column>
-      <el-table-column prop="workstationType" label="工作类型">
+      <el-table-column prop="workstationType" label="工作类型" width="300">
          <template slot-scope="scope" width="100%">
               <el-select placeholder="工作类型" v-model="scope.row.workstationType" :disabled="false">
               <el-option
@@ -77,12 +77,10 @@ export default {
     },
     getEnumSelectValues() {
       this.tableLoading = true
-      let that = this
       this.axios.get('common/enum/selectEnumList', {
         params: 'test'
       }).then((res) => {
         if (res.errCode === 'S') {
-          that.tableData.list = res.data.result
           res.data.result.map(item => {
             if (item.lookupType === 'WS_STATUS') {
               item.value = item.lookupValueNum

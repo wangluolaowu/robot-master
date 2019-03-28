@@ -71,12 +71,10 @@ export default {
     },
     getEnumSelectValues() {
       this.tableLoading = true
-      let that = this
       this.axios.get('common/enum/selectEnumList', {
         params: 'test'
       }).then((res) => {
         if (res.errCode === 'S') {
-          that.tableData.list = res.data.result
           res.data.result.map(item => {
             if (item.lookupType === 'MD_MAP_DIRECTION_LIMIT') {
               item.value = item.lookupValueNum
