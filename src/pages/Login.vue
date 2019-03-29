@@ -93,8 +93,8 @@
               }
             })
             // this.$router.push({ path: '/' })
-            // console.log(datas.admin_token,'atas.admin_token')    
-           
+            // console.log(datas.admin_token,'atas.admin_token')
+  
             // sessionStorage.setItem('id', datas.id)
           } else {
             console.log('error submit!!')

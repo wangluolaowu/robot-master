@@ -10,7 +10,7 @@
       </el-table-column>
       <el-table-column prop="workstationStatus" label="工位状态" width="200">
         <template slot-scope="scope" width="100%">
-              <el-select placeholder="工作状态" v-model="scope.row.workstationStatus" :disabled="false">
+              <el-select placeholder="工作状态" v-model="scope.row.workstationStatus" :disabled="true">
               <el-option
                 v-for="item in WS_STATUS"
                 :key="item.value"
@@ -23,7 +23,7 @@
       </el-table-column>
       <el-table-column prop="workstationType" label="工作类型" width="300">
          <template slot-scope="scope" width="100%">
-              <el-select placeholder="工作类型" v-model="scope.row.workstationType" :disabled="false">
+              <el-select placeholder="工作类型" v-model="scope.row.workstationType" :disabled="true">
               <el-option
                 v-for="item in WS_TYPE"
                 :key="item.value"

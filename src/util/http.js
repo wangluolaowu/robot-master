@@ -6,6 +6,7 @@ let axiosInstance = axios.create({
   // baseURL: 'http://localhost:8090/api/',
   baseURL: 'http://localhost:8080/',
   // baseURL: 'https://bixi-test.cn.isn.corpintra.net/ct',
+  // baseURL: 'http://172.16.18.97:8080/',
   headers: {
     // 'X-Requested-With': 'XMLHttpRequest',
     'Content-Type': 'application/json;charset=utf-8',

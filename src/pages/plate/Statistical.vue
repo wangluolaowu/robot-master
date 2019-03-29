@@ -6,15 +6,15 @@
       <div class="grid-content bg-purple-dark">
         <el-tabs id="topTitle" v-model="search.orderType" @tab-click="handleTabClick">
           <el-tab-pane label="拣货S" name="S"></el-tab-pane>
-          <el-tab-pane label="拣货V" name=""></el-tab-pane>
-          <el-tab-pane label="上架" name=""></el-tab-pane>
-          <el-tab-pane label="调仓-拣出" name=""></el-tab-pane>
-          <el-tab-pane label="调仓-召唤货架" name=""></el-tab-pane>
-          <el-tab-pane label="盘点" name=""></el-tab-pane>
+          <el-tab-pane label="拣货V" name="V"></el-tab-pane>
+          <el-tab-pane label="上架" name="BIN"></el-tab-pane>
+          <el-tab-pane label="调仓-拣出" name="RELOC"></el-tab-pane>
+          <el-tab-pane label="调仓-召唤货架" name="1"></el-tab-pane>
+          <el-tab-pane label="盘点" name="2"></el-tab-pane>
         </el-tabs>
         <div class="canvasOne">
           <div class="clears">
-            <h4 class="h2 fl">30天订单完成统计</h4>
+            <h4 class="h2 fl">最近30天订单完成情况</h4>
             <div class="fr">
               <span class="startTime">2019-03-05</span>
               <span >——</span>
@@ -25,7 +25,7 @@
         </div>
         <div class="canvasOne">
           <div class="clears">
-            <h4 class="h2 fl">30天订单完成统计</h4>
+            <h4 class="h2 fl">最近30天订单收工打印的统计图</h4>
             <div class="fr">
               <span class="startTime">2019-03-05</span>
               <span >——</span>
@@ -38,6 +38,42 @@
     </div>
     <div class="tabOne">
       <h4 class="h2">订单流水</h4>
+       <el-tabs id="topTitle" v-model="searchOrder.orderType" @tab-click="handleTabClickOrder">
+         <el-tab-pane label="拣货S" name="S"></el-tab-pane>
+          <el-tab-pane label="拣货V" name="V"></el-tab-pane>
+          <el-tab-pane label="上货" name="BIN"></el-tab-pane>
+          <el-tab-pane label="调仓-拣出" name="RELOC"></el-tab-pane>
+          <el-tab-pane label="调仓-召唤货架" name=""></el-tab-pane>
+          <el-tab-pane label="盘点" name="STOCK"></el-tab-pane>
+      </el-tabs>
+      <!-- 搜索区域 -->
+      <el-form :inline="true" class="demo-form-inline selectedCont clears">
+          <el-form-item class="fl" label="ISP dealer：">
+              <el-select placeholder="所属平台" v-model="search.ispDealer">
+                  <el-option label="全部" value=""></el-option>
+                  <el-option label="是" value="Y"></el-option>
+                  <el-option label="否" value="N"></el-option>
+                  <!-- <el-option :label="item.platformName" :key="item.clientType" :value="item.clientType" v-for="item in platformTypeList"></el-option> -->
+              </el-select>
+          </el-form-item>
+          <el-form-item class="fl" label="ICT dealer：">
+              <el-select placeholder="所属平台" v-model="search.ictDealer">
+                  <el-option label="全部" value=""></el-option>
+                  <el-option label="是" value="Y"></el-option>
+                  <el-option label="否" value="N"></el-option>
+              </el-select>
+          </el-form-item>
+          <el-form-item class="fl" id="groupBtn">
+              <el-button type="primary" @click="confirm">确认</el-button>
+              <el-button type="primary" :disabled = "cancelDisabled" @click="cancel">取消</el-button>
+          </el-form-item>
+          <el-form-item>
+            <el-checkbox v-model="search.submitAll"  @change="handleCheckAllChange">提交全部</el-checkbox>
+          </el-form-item>
+          <el-form-item>
+              <el-button type="primary" @click="submit" :disabled = "submitIsDisabled" >提交</el-button>
+          </el-form-item>
+      </el-form>
       <el-table :data='tableData.list' highlight-current-row v-loading="tableLoading" style="width: 100%" border>
         <el-table-column prop="attribute07" label="客户编码" width="100">
         </el-table-column>
@@ -105,6 +141,10 @@
           ictDealer: '',
           currentPage: 1
         },
+        searchOrder: { // 查询参数
+          orderType: 'S',
+          currentPage: 1
+        }
       }
     },
     mounted () {
@@ -131,7 +171,7 @@
         this.listSearch.currentPage = val
         this.getPostOne()
       },
-      //切换
+      // 切换
       handleTabClick: function (tab, event) {
         this.initParams()
         this.getTableData()
@@ -153,7 +193,7 @@
           }
         })
       },
-      //统计图
+      // 统计图
       drawLine () {
         let mychart = echarts.init(document.getElementById('myChart'))
         axios.get('kanban/orderKanban/selectDmlBinDeliveryStatList', {}).then((res) => {
@@ -166,39 +206,39 @@
           console.log(err)
         })
         mychart.setOption({
-          tooltip:{
-            trigger:'axis',
-            axisPointer:{
+          tooltip: {
+            trigger: 'axis',
+            axisPointer: {
               type: 'cross'
             }
           },
-          legend:{
-            top:30,
-            right:50
+          legend: {
+            top: 30,
+            right: 50
           },
-          dataZoom:[
+          dataZoom: [
             {
-              type:'inside',
-              show:true,
-              xAxisIndex:[0],
-              start:5,
-              end:20
+              type: 'inside',
+              show: true,
+              xAxisIndex: [0],
+              start: 5,
+              end: 20
             }
           ],
-          xAxis:{
+          xAxis: {
             axisLabel: {
-              interval:0,
-              rotate:40
+              interval: 0,
+              rotate: 40
             },
-            //x轴的动态数据需要填写在则里面
-            data:['0:00','1:00','2:00','3:00','4:00','5:00','6:00','7:00','8:00','9:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00','23:00']
+            // x轴的动态数据需要填写在则里面
+            data: ['0:00', '1:00', '2:00', '3:00', '4:00', '5:00', '6:00', '7:00', '8:00', '9:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00']
           },
           yAxis: {},
           series: [{
-            name:"订单",
-            type:'bar',
-            data:[4,65,79,10,90,80,62,88,100,120,230,330,160,230,350,460,880,1000,122,580,980,440],//需要填写的Y动态数据
-            barWidth:20
+            name: '订单',
+            type: 'bar',
+            data: [4, 65, 79, 10, 90, 80, 62, 88, 100, 120, 230, 330, 160, 230, 350, 460, 880, 1000, 122, 580, 980, 440], // 需要填写的Y动态数据
+            barWidth: 20
           }]
         })
       },
@@ -214,39 +254,39 @@
           console.log(err)
         })
         mychartss.setOption({
-          tooltip:{
-            trigger:'axis',
-            axisPointer:{
+          tooltip: {
+            trigger: 'axis',
+            axisPointer: {
               type: 'cross'
             }
           },
-          legend:{
-            top:30,
-            right:50
+          legend: {
+            top: 30,
+            right: 50
           },
-          dataZoom:[
+          dataZoom: [
             {
-              type:'inside',//inside,slider
-              show:true,
-              xAxisIndex:[0],
-              start:5,
-              end:20
+              type: 'inside', // inside,slider
+              show: true,
+              xAxisIndex: [0],
+              start: 5,
+              end: 20
             }
           ],
-          xAxis:{
+          xAxis: {
             axisLabel: {
-              interval:0,
-              rotate:40
+              interval: 0,
+              rotate: 40
             },
-            //x轴的动态数据需要填写在则里面
-            data:['0:00','1:00','2:00','3:00','4:00','5:00','6:00','7:00','8:00','9:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00','23:00']
+            // x轴的动态数据需要填写在则里面
+            data: ['0:00', '1:00', '2:00', '3:00', '4:00', '5:00', '6:00', '7:00', '8:00', '9:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00']
           },
           yAxis: {},
           series: [{
-            name:"订单",
-            type:'bar',
-            data:[4,65,79,10,90,80,62,88,100,120,230,330,160,230,350,460,880,1000,122,580,980,440],//需要填写的Y动态数据
-            barWidth:30
+            name: '订单',
+            type: 'bar',
+            data: [4, 65, 79, 10, 90, 80, 62, 88, 100, 120, 230, 330, 160, 230, 350, 460, 880, 1000, 122, 580, 980, 440], // 需要填写的Y动态数据
+            barWidth: 30
           }]
         })
       }

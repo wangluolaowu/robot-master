@@ -192,6 +192,19 @@ const routes = [
         name: '角色管理'
       }
     ]
+  },
+  {
+    path: '/',
+    component: Layout,
+    name: '机器人管理',
+    icon: 'el-icon-service',
+    children: [
+      {
+        path: '/robotManage/stopReceive',
+        component: () => import('@/pages/plate/robotManage/stopReceive'),
+        name: '暂停/恢复机器人'
+      }
+    ]
   }
 ]
 for (let i in routerlist) {
